@@ -3,38 +3,59 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
 import FileInput from './FileInput'
 
+const renderField = ({
+    input,
+    type,
+    label,
+    placeholder,
+    id,
+    name,
+    meta: { touched, error, warning } }) => (
+        <div className="form-group">
+            <label htmlFor={id}>{label}:</label>
+            <input {...input} 
+            placeholder={placeholder} 
+            type={type} 
+            className="form-control" 
+            id={id}
+            name={name}/>
+            {touched && ((error && <span style={{color: 'darkred'}}>{error}</span>) 
+            || (warning && <span style={{color: 'darkred'}}>{warning}</span>))}
+        </div>
+    )
+
+const required = value => value ? undefined : 'Required'
+
 class DataSourceCreateFormComponent extends React.Component {
     render() {
         return (
             <div className="row">
                 <div className="col-sm-3"></div>
                 <div className="col-sm-6">
-                    <form style={{ 
-                        borderRadius: '10px solid #F6F2F2', 
+                    <form style={{
+                        borderRadius: '5px',
                         backgroundColor: '#F6F2F2',
                         padding: '10px',
-                        marginTop: '30px'}} 
+                        marginTop: '30px'
+                    }}
                         onSubmit={this.props.handleSubmit(this.onSubmit)} >
-                        <div className="form-group">
-                            <label htmlFor="dataSourceName">Data source name:</label>
-                            <Field
-                                name="dataSourceName"
-                                id="dataSourceName"
-                                component="input"
-                                type="text"
-                                placeholder="Name"
-                                className="form-control" />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="dataSource">Data source:</label>
-                            <br />
-                            <Field
-                                name="dataSource"
-                                id="dataSource"
-                                component={FileInput}
-                                type="file"
-                                placeholder="Select Data Source" />
-                        </div>
+                        <Field
+                            name="dataSourceName"
+                            id="dataSourceName"
+                            component={renderField}
+                            type="text"
+                            placeholder="Name"
+                            className="form-control"
+                            label="Data source name"
+                            validate={[required]} />
+                        <Field
+                            name="dataSource"
+                            id="dataSource"
+                            component={FileInput}
+                            type="file"
+                            placeholder="Select Data Source"
+                            label="Data source"
+                            validate={[required]} />
                         <div className="row">
                             <div className="col-sm-4">
                             </div>
@@ -48,13 +69,13 @@ class DataSourceCreateFormComponent extends React.Component {
         );
     }
 
-    onSubmit = (values) => {
+    onSubmit = values => {
         console.log(values);
     }
 }
 
 var createReduxForm = reduxForm({
-    form: 'createDataSource'
+    form: 'createDataSource',
 })(DataSourceCreateFormComponent)
 
 export default connect(null)(createReduxForm)
