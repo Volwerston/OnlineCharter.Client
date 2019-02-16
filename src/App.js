@@ -1,13 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { BrowserRouter, Route } from 'react-router-dom'
+
+import DataSourceCreateFormComponent from './components/DataSourceCreateFormComponent'
 
 class App extends Component {
   render(){
     return (
-      <div>
-        <h2>Hello World!</h2>
-      </div>
+      <BrowserRouter>
+        <div>
+          <Route path="/" exact component={DataSourceCreateFormComponent} />
+        </div>
+      </BrowserRouter>
     );
   }
-};
+}
 
-export default App;
+export default App
