@@ -25,6 +25,7 @@ const renderField = ({
     )
 
 const required = value => value ? undefined : 'Required'
+const xml = value => value.type === 'text/xml' ? undefined : 'File must be in XML format'
 
 class DataSourceCreateFormComponent extends React.Component {
     render() {
@@ -55,7 +56,8 @@ class DataSourceCreateFormComponent extends React.Component {
                             type="file"
                             placeholder="Select Data Source"
                             label="Data source"
-                            validate={[required]} />
+                            accept=".xml"
+                            validate={[required, xml]} />
                         <div className="row">
                             <div className="col-sm-4">
                             </div>
