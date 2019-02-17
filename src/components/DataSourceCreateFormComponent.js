@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
 import FileInput from './FileInput'
+import {createDataSource} from '../actions'
 
 const renderField = ({
     input,
@@ -72,7 +73,10 @@ class DataSourceCreateFormComponent extends React.Component {
     }
 
     onSubmit = values => {
-        console.log(values);
+        this.props.createDataSource({
+            name: values.dataSourceName,
+            dataSource: values.dataSource
+        });
     }
 }
 
@@ -80,5 +84,5 @@ var createReduxForm = reduxForm({
     form: 'createDataSource',
 })(DataSourceCreateFormComponent)
 
-export default connect(null)(createReduxForm)
+export default connect(null, { createDataSource })(createReduxForm)
 
