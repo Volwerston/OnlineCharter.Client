@@ -1,7 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getDataSource } from '../actions'
-import { Field, reduxForm } from 'redux-form'
+import { getDataSource, updateDataSource } from '../actions'
 
 const required = value => value ? undefined : 'Required'
 
@@ -36,6 +35,13 @@ class DataSourceEditFormComponent extends React.Component {
         this.setState({ dataSourceName: event.target.value });
     }
 
+    submitChanges = () => {
+        this.props.updateDataSource(
+            this.props.match.params.id,
+            this.state.dataSourceName
+        );
+    }
+
     renderConditional = () => {
         if (!this.props.dataSource) {
             return (
@@ -61,11 +67,12 @@ class DataSourceEditFormComponent extends React.Component {
                                 type="button" 
                                 style={{ margin: '3px' }} 
                                 className="btn btn-info float-right"
-                                disabled={this.state.dataSourceNameAlert !== null}>Save</button>
+                                disabled={this.state.dataSourceNameAlert !== null}
+                                onClick={this.submitChanges}>Save</button>
                             </div>
                         </div>
                         <div className="form-group">
-                            <label for="dataSourceName">Data source name:</label>
+                            <label htmlFor="dataSourceName">Data source name:</label>
                             <input
                                 type="text"
                                 name="dataSourceName"
@@ -102,4 +109,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getDataSource })(DataSourceEditFormComponent)
+export default connect(mapStateToProps, { getDataSource, updateDataSource })(DataSourceEditFormComponent)
