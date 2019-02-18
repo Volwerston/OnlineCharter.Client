@@ -1,1 +1,2 @@
 export const CREATE_DATA_SOURCE = 'CREATE_DATA_SOURCE';
+export const GET_DATA_SOURCE = 'GET_DATA_SOURCE';
