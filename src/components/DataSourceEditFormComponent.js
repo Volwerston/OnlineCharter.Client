@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getDataSource, updateDataSource } from '../actions'
+import { getDataSource, updateDataSource, removeDataSource } from '../actions'
 
 const required = value => value ? undefined : 'Required'
 
@@ -42,6 +42,10 @@ class DataSourceEditFormComponent extends React.Component {
         );
     }
 
+    removeDataSource = () => {
+        this.props.removeDataSource(this.props.match.params.id);
+    }
+
     renderConditional = () => {
         if (!this.props.dataSource) {
             return (
@@ -62,7 +66,12 @@ class DataSourceEditFormComponent extends React.Component {
                         }}>
                         <div className="row">
                             <div className="col-sm-12">
-                                <button type="button" style={{ margin: '3px' }} className="btn btn-danger float-right">Remove</button>
+                                <button 
+                                type="button" 
+                                style={{ margin: '3px' }} 
+                                className="btn btn-danger 
+                                float-right"
+                                onClick={this.removeDataSource}>Remove</button>
                                 <button 
                                 type="button" 
                                 style={{ margin: '3px' }} 
@@ -109,4 +118,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getDataSource, updateDataSource })(DataSourceEditFormComponent)
+export default connect(mapStateToProps, { getDataSource, updateDataSource, removeDataSource })(DataSourceEditFormComponent)

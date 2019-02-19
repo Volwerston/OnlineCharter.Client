@@ -1,10 +1,12 @@
 import {
     CREATE_DATA_SOURCE,
     GET_DATA_SOURCE,
-    UPDATE_DATA_SOURCE
+    UPDATE_DATA_SOURCE,
+    REMOVE_DATA_SOURCE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
+import charterClient from '../api/charterClient';
 
 export const createDataSource = formValues => async dispatch => {
     var formData = new FormData();
@@ -26,11 +28,17 @@ export const getDataSource = id => async dispatch => {
 }
 
 export const updateDataSource = (id, dataSourceName) => async dispatch => {
-        console.log("DATA SOURCE NAME: " + dataSourceName);
+    var response = await chartClient.patch(`/dataSource/${id}/update`, {
+        name: dataSourceName
+    });
 
-        var response = await chartClient.patch(`/dataSource/${id}/update`, {
-            name: dataSourceName
-        });
+    dispatch({ type: UPDATE_DATA_SOURCE, payload: id });
+}
 
-        dispatch({ type: UPDATE_DATA_SOURCE, payload: id });
+export const removeDataSource = id => async dispatch => {
+    var response = await charterClient.delete(`/dataSource/${id}/remove`);
+
+    history.push('/');
+
+    dispatch({ type: REMOVE_DATA_SOURCE, payload: id });
 }
