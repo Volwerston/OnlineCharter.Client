@@ -64,6 +64,9 @@ export const setTemplateDataSource = dataSourceId => (dispatch, getState) => {
     console.log("Data sources: " + dataSources);
 
     var selectedDataSource = dataSources.filter(ds => ds.id === dataSourceId)[0];
+    if(!selectedDataSource){
+        selectedDataSource = null;
+    }
 
     dispatch({ type: SET_TEMPLATE_DATA_SOURCE, payload: selectedDataSource });
 }

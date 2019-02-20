@@ -1,15 +1,15 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
-import { 
+import {
     GET_DATA_SOURCE,
     GET_USER_DATA_SOURCES,
-    SET_TEMPLATE_NAME, 
+    SET_TEMPLATE_NAME,
     SET_TEMPLATE_DATA_SOURCE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
-    if(action.type === GET_DATA_SOURCE){
+    if (action.type === GET_DATA_SOURCE) {
         return action.payload;
     }
 
@@ -17,7 +17,7 @@ const currentDataSourceReducer = (currentDataSource = null, action) => {
 }
 
 const userDataSourcesReducer = (userDataSources = [], action) => {
-    if(action.type === GET_USER_DATA_SOURCES){
+    if (action.type === GET_USER_DATA_SOURCES) {
         return action.payload.dataSources;
     }
 
@@ -25,18 +25,18 @@ const userDataSourcesReducer = (userDataSources = [], action) => {
 }
 
 const templateNameReducer = (templateName = null, action) => {
-    if(action.type === SET_TEMPLATE_NAME){
+    if (action.type === SET_TEMPLATE_NAME) {
         return action.payload;
     }
-    
+
     return templateName;
 }
 
 const templateDataSourceReducer = (templateDataSource = null, action) => {
-    if(action.type === SET_TEMPLATE_DATA_SOURCE){
+    if (action.type === SET_TEMPLATE_DATA_SOURCE) {
         return action.payload;
     }
-    
+
     return templateDataSource;
 }
 
