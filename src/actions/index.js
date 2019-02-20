@@ -2,7 +2,8 @@ import {
     CREATE_DATA_SOURCE,
     GET_DATA_SOURCE,
     UPDATE_DATA_SOURCE,
-    REMOVE_DATA_SOURCE
+    REMOVE_DATA_SOURCE,
+    GET_USER_DATA_SOURCES
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -41,4 +42,10 @@ export const removeDataSource = id => async dispatch => {
     history.push('/');
 
     dispatch({ type: REMOVE_DATA_SOURCE, payload: id });
+}
+
+export const getUserDataSources = userId => async dispatch => {
+    var response = await chartClient.get(`/dataSource/user/${userId}/all`);
+
+    dispatch({ type: GET_USER_DATA_SOURCES, payload: response.data });
 }

@@ -4,6 +4,7 @@ import history from './utils/history'
 
 import DataSourceCreateFormComponent from './components/DataSourceCreateFormComponent'
 import DataSourceEditFormComponent from './components/DataSourceEditFormComponent';
+import TemplateCreateFormComponent from './components/TemplateCreateFormComponent';
 
 class App extends Component {
   render(){
@@ -12,6 +13,7 @@ class App extends Component {
         <div>
           <Route path="/" exact component={DataSourceCreateFormComponent} />
           <Route path="/dataSource/:id" exact component={DataSourceEditFormComponent} />
+          <Route path="/template/create" exact component={TemplateCreateFormComponent} />
         </div>
       </Router>
     );
