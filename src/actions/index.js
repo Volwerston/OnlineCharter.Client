@@ -3,7 +3,9 @@ import {
     GET_DATA_SOURCE,
     UPDATE_DATA_SOURCE,
     REMOVE_DATA_SOURCE,
-    GET_USER_DATA_SOURCES
+    GET_USER_DATA_SOURCES,
+    SET_TEMPLATE_NAME,
+    SET_TEMPLATE_DATA_SOURCE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -48,4 +50,20 @@ export const getUserDataSources = userId => async dispatch => {
     var response = await chartClient.get(`/dataSource/user/${userId}/all`);
 
     dispatch({ type: GET_USER_DATA_SOURCES, payload: response.data });
+}
+
+export const setTemplateName = templateName => {
+    return {
+        type: SET_TEMPLATE_NAME,
+        payload: templateName
+    };
+}
+
+export const setTemplateDataSource = dataSourceId => (dispatch, getState) => {
+    var dataSources = getState().userDataSources;
+    console.log("Data sources: " + dataSources);
+
+    var selectedDataSource = dataSources.filter(ds => ds.id === dataSourceId)[0];
+
+    dispatch({ type: SET_TEMPLATE_DATA_SOURCE, payload: selectedDataSource });
 }

@@ -3,30 +3,8 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form'
 import FileInput from './FileInput'
 import {createDataSource} from '../actions'
-
-const renderField = ({
-    input,
-    type,
-    label,
-    placeholder,
-    id,
-    name,
-    meta: { touched, error, warning } }) => (
-        <div className="form-group">
-            <label htmlFor={id}>{label}:</label>
-            <input {...input} 
-            placeholder={placeholder} 
-            type={type} 
-            className="form-control" 
-            id={id}
-            name={name}/>
-            {touched && ((error && <span style={{color: 'darkred'}}>{error}</span>) 
-            || (warning && <span style={{color: 'darkred'}}>{warning}</span>))}
-        </div>
-    )
-
-const required = value => value ? undefined : 'Required'
-const xml = value => value.type === 'text/xml' ? undefined : 'File must be in XML format'
+import {renderField} from '../utils/renderField'
+import { required, xml } from '../utils/validations'
 
 class DataSourceCreateFormComponent extends React.Component {
     render() {
