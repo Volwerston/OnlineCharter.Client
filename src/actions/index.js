@@ -5,7 +5,8 @@ import {
     REMOVE_DATA_SOURCE,
     GET_USER_DATA_SOURCES,
     SET_TEMPLATE_NAME,
-    SET_TEMPLATE_DATA_SOURCE
+    SET_TEMPLATE_DATA_SOURCE,
+    SET_TEMPLATE_CHART_TYPE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -69,4 +70,11 @@ export const setTemplateDataSource = dataSourceId => (dispatch, getState) => {
     }
 
     dispatch({ type: SET_TEMPLATE_DATA_SOURCE, payload: selectedDataSource });
+}
+
+export const setTemplateChartType = chartType => {
+    return {
+        type: SET_TEMPLATE_CHART_TYPE,
+        payload: chartType
+    };
 }

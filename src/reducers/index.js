@@ -5,7 +5,8 @@ import {
     GET_DATA_SOURCE,
     GET_USER_DATA_SOURCES,
     SET_TEMPLATE_NAME,
-    SET_TEMPLATE_DATA_SOURCE
+    SET_TEMPLATE_DATA_SOURCE,
+    SET_TEMPLATE_CHART_TYPE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -40,12 +41,21 @@ const templateDataSourceReducer = (templateDataSource = null, action) => {
     return templateDataSource;
 }
 
+const templateChartTypeReducer = (chartType = null, action) => {
+    if(action.type === SET_TEMPLATE_CHART_TYPE){
+        return action.payload;
+    }
+
+    return chartType;
+}
+
 export default combineReducers(
     {
         form: formReducer,
         currentDataSource: currentDataSourceReducer,
         userDataSources: userDataSourcesReducer,
         templateName: templateNameReducer,
-        templateDataSource: templateDataSourceReducer
+        templateDataSource: templateDataSourceReducer,
+        templateChartType: templateChartTypeReducer
     }
 );
