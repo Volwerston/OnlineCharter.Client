@@ -5,13 +5,21 @@ import { setTemplateChartType } from '../actions'
 class ChartTypeComponent extends React.Component {
 
     setTemplateChartType = () => {
-        console.log("chart type: " + this.props.chartType);
         this.props.setTemplateChartType(this.props.chartType);
     }
 
     render(){
+
+        var className = "row chart-type"
+        if(this.props.chartType === this.props.selectedChartType){
+            className = "row selected-chart-type";
+        }
+
         return (
-            <div className="row" style={this.props.customStyle} onClick={this.setTemplateChartType}>
+            <div 
+                className={className} 
+                style={this.props.customStyle} 
+                onClick={this.setTemplateChartType}>
                 <div className="col-sm-12" style={{margin: '10px'}}>
                     <img 
                     className="img-responsive" 

@@ -1,0 +1,15 @@
+.chart-type {
+    border: 1px solid lightblue;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.chart-type:hover {
+    border: 3px solid lightskyblue;
+}
+
+.selected-chart-type {
+    border: 3px solid darkblue;
+    border-radius: 3px;
+    cursor: pointer;
+}

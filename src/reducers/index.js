@@ -43,7 +43,7 @@ const templateDataSourceReducer = (templateDataSource = null, action) => {
     return templateDataSource;
 }
 
-const templateChartTypeReducer = (chartType = null, action) => {
+const templateChartTypeReducer = (chartType = "pie", action) => {
     if(action.type === SET_TEMPLATE_CHART_TYPE){
         return action.payload;
     }
