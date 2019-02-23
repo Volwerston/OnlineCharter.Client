@@ -5,7 +5,8 @@ import { getUserDataSources } from '../actions'
 
 import TemplateSourceComponent from './TemplateSourceComponent'
 import TemplateChartTypeComponent from './TemplateChartTypeComponent';
-import TemplateKeySelectorComponent from './TemplateKeySelectorComponent';
+import TemplateKeySelectorComponent from './TemplateKeySelectorComponent'
+import TemplateMapFunctionComponent from './TemplateMapFunctionComponent'
 
 class TemplateCreateFormComponent extends React.Component {
     
@@ -22,6 +23,7 @@ class TemplateCreateFormComponent extends React.Component {
                     <TemplateChartTypeComponent />
                     <br/>
                     <TemplateKeySelectorComponent />
+                    <TemplateMapFunctionComponent />
                 </div>
             </div>
         );

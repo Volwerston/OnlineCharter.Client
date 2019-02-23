@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { setTemplateKeySelector } from '../actions'
+import { setTemplateMapFunction } from '../actions'
 
-class TemplateKeySelectorComponent extends React.Component {
+class TemplateMapFunctionComponent extends React.Component {
 
-    setTemplateKeySelector = e => {
-        this.props.setTemplateKeySelector(e.target.value);
+    setTemplateMapFunction = e => {
+        this.props.setTemplateMapFunction(e.target.value);
     }
 
     renderDataSourceKeys = () => {
@@ -27,11 +27,11 @@ class TemplateKeySelectorComponent extends React.Component {
             <div className="row">
                 <div className="col-sm-12">
                     <div className="form-group">
-                        <label htmlFor="keySelector">Key selector: </label>
+                        <label htmlFor="mapFunction">Map function: </label>
                         <select 
-                        name="keySelector" 
+                        name="mapFunction" 
                         className="form-control"
-                        onChange={this.setTemplateKeySelector}>
+                        onChange={this.setTemplateMapFunction}>
                             {this.renderDataSourceKeys()}
                         </select>
                     </div>
@@ -54,4 +54,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, { setTemplateKeySelector })(TemplateKeySelectorComponent)
+export default connect(mapStateToProps, { setTemplateMapFunction })(TemplateMapFunctionComponent)

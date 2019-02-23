@@ -6,7 +6,9 @@ import {
     GET_USER_DATA_SOURCES,
     SET_TEMPLATE_NAME,
     SET_TEMPLATE_DATA_SOURCE,
-    SET_TEMPLATE_CHART_TYPE
+    SET_TEMPLATE_CHART_TYPE,
+    SET_TEMPLATE_KEY_SELECTOR,
+    SET_TEMPLATE_MAP_FUNCTION
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -49,6 +51,23 @@ const templateChartTypeReducer = (chartType = null, action) => {
     return chartType;
 }
 
+const templateKeySelectorReducer = (keySelector = null, action) => {
+    if(action.type === SET_TEMPLATE_KEY_SELECTOR){
+        return action.payload;
+    }
+
+    return keySelector;
+}
+
+const templateMapFunctionReducer = (mapFunction = null, action) => {
+    if(action.type === SET_TEMPLATE_MAP_FUNCTION){
+        return action.payload;
+    }
+
+    return mapFunction;
+}
+
+
 export default combineReducers(
     {
         form: formReducer,
@@ -56,6 +75,8 @@ export default combineReducers(
         userDataSources: userDataSourcesReducer,
         templateName: templateNameReducer,
         templateDataSource: templateDataSourceReducer,
-        templateChartType: templateChartTypeReducer
+        templateChartType: templateChartTypeReducer,
+        templateKeySelector: templateKeySelectorReducer,
+        templateMapFunction: templateMapFunctionReducer
     }
 );

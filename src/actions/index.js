@@ -6,7 +6,9 @@ import {
     GET_USER_DATA_SOURCES,
     SET_TEMPLATE_NAME,
     SET_TEMPLATE_DATA_SOURCE,
-    SET_TEMPLATE_CHART_TYPE
+    SET_TEMPLATE_CHART_TYPE,
+    SET_TEMPLATE_KEY_SELECTOR,
+    SET_TEMPLATE_MAP_FUNCTION
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -76,5 +78,19 @@ export const setTemplateChartType = chartType => {
     return {
         type: SET_TEMPLATE_CHART_TYPE,
         payload: chartType
+    };
+}
+
+export const setTemplateKeySelector = keySelector => {
+    return {
+        type: SET_TEMPLATE_KEY_SELECTOR,
+        payload: keySelector
+    };
+}
+
+export const setTemplateMapFunction = mapFunction => {
+    return {
+        type: SET_TEMPLATE_MAP_FUNCTION,
+        payload: mapFunction
     };
 }
