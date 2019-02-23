@@ -1,9 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import TemplateSourceComponent from './TemplateSourceComponent'
 import { getUserDataSources } from '../actions'
+
+import TemplateSourceComponent from './TemplateSourceComponent'
 import TemplateChartTypeComponent from './TemplateChartTypeComponent';
+import TemplateKeySelectorComponent from './TemplateKeySelectorComponent';
 
 class TemplateCreateFormComponent extends React.Component {
     
@@ -18,6 +20,8 @@ class TemplateCreateFormComponent extends React.Component {
                 <div className="col-sm-8">
                     <TemplateSourceComponent dataSources={this.props.dataSources} />
                     <TemplateChartTypeComponent />
+                    <br/>
+                    <TemplateKeySelectorComponent />
                 </div>
             </div>
         );

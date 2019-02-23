@@ -63,4 +63,3 @@ var createReduxForm = reduxForm({
 })(DataSourceCreateFormComponent)
 
 export default connect(null, { createDataSource })(createReduxForm)
-
