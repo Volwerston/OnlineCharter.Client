@@ -4,9 +4,10 @@ import { connect } from 'react-redux'
 import { getUserDataSources } from '../actions'
 
 import TemplateSourceComponent from './TemplateSourceComponent'
-import TemplateChartTypeComponent from './TemplateChartTypeComponent';
+import TemplateChartTypeComponent from './TemplateChartTypeComponent'
 import TemplateKeySelectorComponent from './TemplateKeySelectorComponent'
 import TemplateMapFunctionComponent from './TemplateMapFunctionComponent'
+import TemplateDataSourceFilterComponent from './TemplateDataSourceFilterComponent'
 
 class TemplateCreateFormComponent extends React.Component {
     
@@ -24,6 +25,7 @@ class TemplateCreateFormComponent extends React.Component {
                     <br/>
                     <TemplateKeySelectorComponent />
                     <TemplateMapFunctionComponent />
+                    <TemplateDataSourceFilterComponent />
                 </div>
             </div>
         );

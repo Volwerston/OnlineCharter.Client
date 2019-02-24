@@ -8,7 +8,10 @@ import {
     SET_TEMPLATE_DATA_SOURCE,
     SET_TEMPLATE_CHART_TYPE,
     SET_TEMPLATE_KEY_SELECTOR,
-    SET_TEMPLATE_MAP_FUNCTION
+    SET_TEMPLATE_MAP_FUNCTION,
+    SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
+    SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
+    SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -67,6 +70,31 @@ const templateMapFunctionReducer = (mapFunction = null, action) => {
     return mapFunction;
 }
 
+export const templateDataSourceFilterLeftValueReducer = (leftValue = null, action) => {
+    if(action.type === SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE){
+        return action.payload;
+    }
+
+    return leftValue;
+}
+
+export const templateDataSourceFilterComparatorReducer = (comparator = "=", action) => {
+    if(action.type === SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR){
+        return action.payload;
+    }
+
+    return comparator;
+}
+
+export const templateDataSourceFilterRightValueReducer = (rightValue = null, action) => {
+    if(action.type === SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE){
+        return action.payload;
+    }
+
+    return rightValue;
+}
+
+
 
 export default combineReducers(
     {
@@ -77,6 +105,9 @@ export default combineReducers(
         templateDataSource: templateDataSourceReducer,
         templateChartType: templateChartTypeReducer,
         templateKeySelector: templateKeySelectorReducer,
-        templateMapFunction: templateMapFunctionReducer
+        templateMapFunction: templateMapFunctionReducer,
+        templateDataSourceFilterLeftValue: templateDataSourceFilterLeftValueReducer,
+        templateDataSourceFilterComparator: templateDataSourceFilterComparatorReducer,
+        templateDataSourceFilterRightValue: templateDataSourceFilterRightValueReducer
     }
 );

@@ -8,7 +8,10 @@ import {
     SET_TEMPLATE_DATA_SOURCE,
     SET_TEMPLATE_CHART_TYPE,
     SET_TEMPLATE_KEY_SELECTOR,
-    SET_TEMPLATE_MAP_FUNCTION
+    SET_TEMPLATE_MAP_FUNCTION,
+    SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
+    SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
+    SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -92,5 +95,26 @@ export const setTemplateMapFunction = mapFunction => {
     return {
         type: SET_TEMPLATE_MAP_FUNCTION,
         payload: mapFunction
+    };
+}
+
+export const setTemplateDataSourceFilterLeftValue = leftValue => {
+    return {
+        type: SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
+        payload: leftValue
+    };
+}
+
+export const setTemplateDataSourceFilterComparator = comparator => {
+    return {
+        type: SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
+        payload: comparator
+    };
+}
+
+export const setTemplateDataSourceFilterRightValue = rightValue => {
+    return {
+        type: SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
+        payload: rightValue
     };
 }
