@@ -28,6 +28,12 @@ class TemplateCreateFormComponent extends React.Component {
                     <TemplateMapFunctionComponent />
                     <TemplateDataSourceFilterComponent />
                     <TemplateAggregateFunctionComponent/>
+                    <div className="row">
+                        <div className="col-sm-4"></div>
+                        <div className="col-sm-4">
+                            <button className="btn btn-block btn-info">Create</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         );
