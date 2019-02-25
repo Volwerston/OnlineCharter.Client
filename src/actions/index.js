@@ -11,7 +11,8 @@ import {
     SET_TEMPLATE_MAP_FUNCTION,
     SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
     SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
-    SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE
+    SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
+    SET_TEMPLATE_AGGREGATE_FUNCTION
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -118,3 +119,10 @@ export const setTemplateDataSourceFilterRightValue = rightValue => {
         payload: rightValue
     };
 }
+
+export const setTemplateAggregateFunction = aggregateFunction => {
+    return {
+        type: SET_TEMPLATE_AGGREGATE_FUNCTION,
+        payload: aggregateFunction
+    };  
+};

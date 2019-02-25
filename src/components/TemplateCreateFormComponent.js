@@ -8,6 +8,7 @@ import TemplateChartTypeComponent from './TemplateChartTypeComponent'
 import TemplateKeySelectorComponent from './TemplateKeySelectorComponent'
 import TemplateMapFunctionComponent from './TemplateMapFunctionComponent'
 import TemplateDataSourceFilterComponent from './TemplateDataSourceFilterComponent'
+import TemplateAggregateFunctionComponent from './TemplateAggregateFunctionComponent'
 
 class TemplateCreateFormComponent extends React.Component {
     
@@ -26,6 +27,7 @@ class TemplateCreateFormComponent extends React.Component {
                     <TemplateKeySelectorComponent />
                     <TemplateMapFunctionComponent />
                     <TemplateDataSourceFilterComponent />
+                    <TemplateAggregateFunctionComponent/>
                 </div>
             </div>
         );

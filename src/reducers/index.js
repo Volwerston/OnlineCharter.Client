@@ -11,7 +11,8 @@ import {
     SET_TEMPLATE_MAP_FUNCTION,
     SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
     SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
-    SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE
+    SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
+    SET_TEMPLATE_AGGREGATE_FUNCTION
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -70,7 +71,7 @@ const templateMapFunctionReducer = (mapFunction = null, action) => {
     return mapFunction;
 }
 
-export const templateDataSourceFilterLeftValueReducer = (leftValue = null, action) => {
+const templateDataSourceFilterLeftValueReducer = (leftValue = null, action) => {
     if(action.type === SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE){
         return action.payload;
     }
@@ -78,7 +79,7 @@ export const templateDataSourceFilterLeftValueReducer = (leftValue = null, actio
     return leftValue;
 }
 
-export const templateDataSourceFilterComparatorReducer = (comparator = "=", action) => {
+const templateDataSourceFilterComparatorReducer = (comparator = "=", action) => {
     if(action.type === SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR){
         return action.payload;
     }
@@ -86,7 +87,7 @@ export const templateDataSourceFilterComparatorReducer = (comparator = "=", acti
     return comparator;
 }
 
-export const templateDataSourceFilterRightValueReducer = (rightValue = null, action) => {
+const templateDataSourceFilterRightValueReducer = (rightValue = null, action) => {
     if(action.type === SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE){
         return action.payload;
     }
@@ -94,7 +95,13 @@ export const templateDataSourceFilterRightValueReducer = (rightValue = null, act
     return rightValue;
 }
 
+const templateAggregateFunctionReducer = (aggregateFunction = "percent", action) => {
+    if(action.type === SET_TEMPLATE_AGGREGATE_FUNCTION){
+        return action.payload;
+    }
 
+    return aggregateFunction;
+}
 
 export default combineReducers(
     {
@@ -108,6 +115,7 @@ export default combineReducers(
         templateMapFunction: templateMapFunctionReducer,
         templateDataSourceFilterLeftValue: templateDataSourceFilterLeftValueReducer,
         templateDataSourceFilterComparator: templateDataSourceFilterComparatorReducer,
-        templateDataSourceFilterRightValue: templateDataSourceFilterRightValueReducer
+        templateDataSourceFilterRightValue: templateDataSourceFilterRightValueReducer,
+        templateAggregateFunction: templateAggregateFunctionReducer
     }
 );
