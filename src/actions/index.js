@@ -12,7 +12,8 @@ import {
     SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
     SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
     SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
-    SET_TEMPLATE_AGGREGATE_FUNCTION
+    SET_TEMPLATE_AGGREGATE_FUNCTION,
+    CREATE_TEMPLATE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -125,4 +126,26 @@ export const setTemplateAggregateFunction = aggregateFunction => {
         type: SET_TEMPLATE_AGGREGATE_FUNCTION,
         payload: aggregateFunction
     };  
+};
+
+export const createTemplate = () => async (dispatch, getState) => {
+    var state = getState();
+
+    var template = {
+        name: state.templateName,
+        dataSourceId: state.templateDataSource.id,
+        templateChartType: state.templateChartType,
+        templateKeySelector: state.templateKeySelector,
+        templateMapFunction: state.templateMapFunction,
+        dataSourceFilter: {
+            leftValue: state.templateDataSourceFilterLeftValue,
+            comparator: state.templateDataSourceFilterComparator,
+            rightValue: state.templateDataSourceFilterRightValue
+        },
+        templateAggregateFunction: state.templateAggregateFunction
+    };
+
+    var response = await chartClient.post('/template/create', template);
+
+    dispatch({ type: CREATE_TEMPLATE, payload: response.data.id });
 };

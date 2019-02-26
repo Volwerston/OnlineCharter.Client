@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getUserDataSources } from '../actions'
+import { getUserDataSources, createTemplate } from '../actions'
 
 import TemplateSourceComponent from './TemplateSourceComponent'
 import TemplateChartTypeComponent from './TemplateChartTypeComponent'
@@ -31,7 +31,9 @@ class TemplateCreateFormComponent extends React.Component {
                     <div className="row">
                         <div className="col-sm-4"></div>
                         <div className="col-sm-4">
-                            <button className="btn btn-block btn-info">Create</button>
+                            <button 
+                                className="btn btn-block btn-info"
+                                onClick={this.props.createTemplate}>Create</button>
                         </div>
                     </div>
                 </div>
@@ -46,4 +48,4 @@ function mapStateToProps(state){
     };
 }
 
-export default connect(mapStateToProps, { getUserDataSources })(TemplateCreateFormComponent);
+export default connect(mapStateToProps, { getUserDataSources, createTemplate })(TemplateCreateFormComponent);
