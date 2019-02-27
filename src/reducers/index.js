@@ -12,7 +12,8 @@ import {
     SET_TEMPLATE_DATA_SOURCE_FILTER_LEFT_VALUE,
     SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
     SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
-    SET_TEMPLATE_AGGREGATE_FUNCTION
+    SET_TEMPLATE_AGGREGATE_FUNCTION,
+    GET_TEMPLATE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -103,6 +104,14 @@ const templateAggregateFunctionReducer = (aggregateFunction = "percent", action)
     return aggregateFunction;
 }
 
+const currentTemplateReducer = (currentTemplate = null, action) => {
+    if(action.type === GET_TEMPLATE){
+        return action.payload;
+    }
+
+    return currentTemplate;
+}
+
 export default combineReducers(
     {
         form: formReducer,
@@ -116,6 +125,7 @@ export default combineReducers(
         templateDataSourceFilterLeftValue: templateDataSourceFilterLeftValueReducer,
         templateDataSourceFilterComparator: templateDataSourceFilterComparatorReducer,
         templateDataSourceFilterRightValue: templateDataSourceFilterRightValueReducer,
-        templateAggregateFunction: templateAggregateFunctionReducer
+        templateAggregateFunction: templateAggregateFunctionReducer,
+        currentTemplate: currentTemplateReducer
     }
 );
