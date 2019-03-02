@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getTemplate } from '../actions'
+import { getTemplate, removeTemplate } from '../actions'
 
 class TemplateInfoComponent extends React.Component {
     componentDidMount(){
@@ -9,7 +9,7 @@ class TemplateInfoComponent extends React.Component {
     }
 
     removeTemplate = () => {
-        
+        this.props.removeTemplate(this.props.match.params.id);
     };
 
     renderTemplate(){
@@ -121,7 +121,8 @@ class TemplateInfoComponent extends React.Component {
                             <button 
                                 type="button" 
                                 style={{ margin: '3px' }} 
-                                className="btn btn-danger float-right">
+                                className="btn btn-danger float-right"
+                                onClick={this.removeTemplate}>
                                 Remove
                             </button>
                             <button 
@@ -148,4 +149,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, { getTemplate })(TemplateInfoComponent)
+export default connect(mapStateToProps, { getTemplate, removeTemplate })(TemplateInfoComponent)

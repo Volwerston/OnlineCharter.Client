@@ -14,7 +14,8 @@ import {
     SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
     SET_TEMPLATE_AGGREGATE_FUNCTION,
     CREATE_TEMPLATE,
-    GET_TEMPLATE
+    GET_TEMPLATE,
+    REMOVE_TEMPLATE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -157,4 +158,13 @@ export const createTemplate = () => async (dispatch, getState) => {
     dispatch({ type: CREATE_TEMPLATE, payload: response.data.id });
 
     history.push(`/template/info/${response.data.id}`);
+};
+
+export const removeTemplate = templateId => async dispatch => {
+
+    var response = await chartClient.delete(`/template/${templateId}`);
+
+    dispatch({ type: REMOVE_TEMPLATE, payload: templateId });
+
+    history.push('/template/create');
 };
