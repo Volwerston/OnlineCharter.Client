@@ -15,7 +15,8 @@ import {
     SET_TEMPLATE_AGGREGATE_FUNCTION,
     CREATE_TEMPLATE,
     GET_TEMPLATE,
-    REMOVE_TEMPLATE
+    REMOVE_TEMPLATE,
+    CALCULATE_TEMPLATE
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -167,4 +168,11 @@ export const removeTemplate = templateId => async dispatch => {
     dispatch({ type: REMOVE_TEMPLATE, payload: templateId });
 
     history.push('/template/create');
+};
+
+export const calculateTemplate = templateId => async dispatch => {
+
+    var response = await chartClient.get(`/template/${templateId}/calculate`);
+
+    dispatch({ type: CALCULATE_TEMPLATE, payload: response.data });
 };

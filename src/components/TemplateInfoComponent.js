@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { getTemplate, removeTemplate } from '../actions'
 
@@ -125,12 +126,14 @@ class TemplateInfoComponent extends React.Component {
                                 onClick={this.removeTemplate}>
                                 Remove
                             </button>
+                            <Link to={`/template/${this.props.match.params.id}/visualize`}>
                             <button 
                                 type="button" 
                                 style={{ margin: '3px' }} 
                                 className="btn btn-info float-right">
                                 Visualize
                             </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

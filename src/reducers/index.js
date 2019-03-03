@@ -13,7 +13,8 @@ import {
     SET_TEMPLATE_DATA_SOURCE_FILTER_COMPARATOR,
     SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
     SET_TEMPLATE_AGGREGATE_FUNCTION,
-    GET_TEMPLATE
+    GET_TEMPLATE,
+    CALCULATE_TEMPLATE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -112,6 +113,14 @@ const currentTemplateReducer = (currentTemplate = null, action) => {
     return currentTemplate;
 }
 
+const templateCalculationResultReducer = (calculationResult = null, action) => {
+    if(action.type === CALCULATE_TEMPLATE){
+        return action.payload;
+    }
+
+    return calculationResult;
+}
+
 export default combineReducers(
     {
         form: formReducer,
@@ -126,6 +135,7 @@ export default combineReducers(
         templateDataSourceFilterComparator: templateDataSourceFilterComparatorReducer,
         templateDataSourceFilterRightValue: templateDataSourceFilterRightValueReducer,
         templateAggregateFunction: templateAggregateFunctionReducer,
-        currentTemplate: currentTemplateReducer
+        currentTemplate: currentTemplateReducer,
+        templateCalculationResult: templateCalculationResultReducer
     }
 );

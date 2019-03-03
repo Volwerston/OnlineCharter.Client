@@ -6,6 +6,7 @@ import DataSourceCreateFormComponent from './components/DataSourceCreateFormComp
 import DataSourceEditFormComponent from './components/DataSourceEditFormComponent';
 import TemplateCreateFormComponent from './components/TemplateCreateFormComponent';
 import TemplateInfoComponent from './components/TemplateInfoComponent';
+import TemplateVisualizerComponent from './components/TemplateVisualizerComponent';
 
 class App extends Component {
   render(){
@@ -16,6 +17,7 @@ class App extends Component {
           <Route path="/dataSource/:id" exact component={DataSourceEditFormComponent} />
           <Route path="/template/create" exact component={TemplateCreateFormComponent} />
           <Route path="/template/info/:id" exact component={TemplateInfoComponent} />
+          <Route path="/template/:id/visualize" exact component={TemplateVisualizerComponent} />
         </div>
       </Router>
     );
