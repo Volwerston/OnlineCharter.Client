@@ -5,32 +5,99 @@ import 'c3/c3.css'
 
 import { calculateTemplate } from '../actions'
 
+Array.prototype.groupBy = function(prop) {
+    return this.reduce(function(groups, item) {
+      const val = item[prop]
+      groups[val] = groups[val] || []
+      groups[val].push(item)
+      return groups
+    }, {})
+  }
+
+const chartConfig = {
+    aggregateFunctions: {
+        "sum": function(calculationResult){
+            var cr = Object.values(calculationResult.groupBy('item1'));
+            var toReturn = [];
+
+            cr.forEach(group => {
+               var reduceResult = group.reduce((prev, cur) => {
+                    return { 
+                        x: prev.x ? prev.x : cur.item1,
+                        y: prev.y ? prev.y + cur.item2 : cur.item2
+                    }
+                }, 
+                { });
+
+                toReturn.push(reduceResult);
+            });
+            
+            return toReturn;
+        },
+        "percent": function(calculationResult){
+            var cr = Object.values(calculationResult.groupBy('item1'));
+            var toReturn = [];
+
+            cr.forEach(group => {
+               var reduceResult = group.reduce((prev, cur) => {
+                    return { 
+                        x: prev.x ? prev.x : cur.item1,
+                        y: (prev.y ? prev.y + (1/calculationResult.length) : 1/calculationResult.length).toFixed(2)
+                    }
+                }, 
+                { });
+
+                toReturn.push(reduceResult);
+            });
+            
+            return toReturn;
+        },
+        "count": function(calculationResult){
+            var cr = Object.values(calculationResult.groupBy('item1'));
+            var toReturn = [];
+
+            cr.forEach(group => {
+               var reduceResult = group.reduce((prev, cur) => {
+                    return { 
+                        x: prev.x ? prev.x : cur.item1,
+                        y: prev.y ? prev.y + 1 : 1
+                    }
+                }, 
+                { });
+
+                toReturn.push(reduceResult);
+            });
+            
+            return toReturn;
+        }
+    }
+};
+
 class TemplateVisualizerComponent extends React.Component {
     componentDidMount(){
         this.props.calculateTemplate(this.props.match.params.id);
     }
 
-    render(){
-        const data = {
-            x: 'x',
-            columns: [
-              ['x', "5", "15"],
-              ['data', 1, 3]
-            ],
-            type: 'bar'
-          };
+    render(){       
+        var calculateChartValuesResult = [];
 
-          const axis ={
-            x: {
-                type: 'category' // this needed to load string x value
-            }
-        };
+        if(this.props.calculationResult){
+            var calculationResult = this.props.calculationResult.calculationResult;
+            var aggregateFunction = this.props.calculationResult.template.aggregateFunction;
+
+            calculateChartValuesResult = chartConfig.aggregateFunctions[aggregateFunction](calculationResult);     
+        }
         
         return (
             <div>
-                <C3Chart data={data} axis={axis} />
                 <div>
                     {JSON.stringify(this.props.calculationResult)}
+                </div>
+                <div>
+                    ---------------------------------
+                </div>
+                <div>
+                    {JSON.stringify(calculateChartValuesResult)}
                 </div>
             </div>
         );
