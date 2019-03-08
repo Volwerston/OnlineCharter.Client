@@ -25,9 +25,9 @@ class TemplateChartTypeComponent extends React.Component {
                 </div>
                 <div className="col-md-4">
                     <ChartTypeComponent
-                        chartType="function"
-                        chartName="Function"
-                        imageSrc="./images/func.png"
+                        chartType="line"
+                        chartName="Line"
+                        imageSrc="./images/line.jpg"
                         customStyle={{ height: '300px', width: '100%' }} 
                         selectedChartType={ this.props.selectedChartType }/>
                 </div>

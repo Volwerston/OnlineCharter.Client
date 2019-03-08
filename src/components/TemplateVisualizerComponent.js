@@ -103,11 +103,98 @@ const chartConfig = {
                 }
             };
         },
-        "bar": {
+        "bar": function(aggregateFunctionName, calculationResult, mapFunction){
+            var x = ['x'];
+            var y = [`${aggregateFunctionName}(${mapFunction})`];
 
+            calculationResult.forEach(res => {
+                x.push(res.x);
+
+                if(aggregateFunctionName === "percent"){
+                    y.push(parseFloat(res.y)*100.0);
+                }
+                else{
+                    y.push(parseFloat(res.y));
+                }          
+            });
+            
+            return {
+                data: {
+                    x: 'x',
+                    columns: [
+                        x,
+                        y
+                    ],
+                    type: 'bar'
+                },
+                axis: {
+                    x: {
+                        type: 'category',
+                        tick: {
+                            rotate: 75,
+                            multiline: false
+                        },
+                        height: 130
+                    },
+                    y : {
+                        tick: {
+                            format: function(value){
+                                if(aggregateFunctionName === "percent"){
+                                    return value + '%';
+                                }
+                                
+                                return value;
+                            }
+                        }
+                    }
+                }
+            };
         },
-        "line": {
+        "line": function(aggregateFunctionName, calculationResult, mapFunction){
+            var x = ['x'];
+            var y = [`${aggregateFunctionName}(${mapFunction})`];
 
+            calculationResult.forEach(res => {
+                x.push(res.x);
+
+                if(aggregateFunctionName === "percent"){
+                    y.push(parseFloat(res.y)*100.0);
+                }
+                else{
+                    y.push(parseFloat(res.y));
+                }          
+            });
+            
+            return {
+                data: {
+                    x: 'x',
+                    columns: [
+                        x,
+                        y
+                    ]
+                },
+                axis: {
+                    x: {
+                        type: 'category',
+                        tick: {
+                            rotate: 75,
+                            multiline: false
+                        },
+                        height: 130
+                    },
+                    y : {
+                        tick: {
+                            format: function(value){
+                                if(aggregateFunctionName === "percent"){
+                                    return value + '%';
+                                }
+                                
+                                return value;
+                            }
+                        }
+                    }
+                }
+            };
         }
     }
 };
@@ -122,9 +209,10 @@ class TemplateVisualizerComponent extends React.Component {
             var calculationResult = this.props.calculationResult.calculationResult;
             var aggregateFunction = this.props.calculationResult.template.aggregateFunction;
             var chartType = this.props.calculationResult.template.chartType;
+            var mapFunction = this.props.calculationResult.template.mapFunction.returnValue;
 
             var calculateChartValuesResult = chartConfig.aggregateFunctions[aggregateFunction](calculationResult);
-            var c3Props = chartConfig.chartFunctions[chartType](aggregateFunction, calculateChartValuesResult);
+            var c3Props = chartConfig.chartFunctions[chartType](aggregateFunction, calculateChartValuesResult, mapFunction);
 
             return (
                 <div className="row">
