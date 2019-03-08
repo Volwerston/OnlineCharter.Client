@@ -22,16 +22,16 @@ const chartConfig = {
 
             cr.forEach(group => {
                var reduceResult = group.reduce((prev, cur) => {
-                    return { 
+                    return {
                         x: prev.x ? prev.x : cur.item1,
                         y: prev.y ? prev.y + cur.item2 : cur.item2
                     }
-                }, 
+                },
                 { });
 
                 toReturn.push(reduceResult);
             });
-            
+
             return toReturn;
         },
         "percent": function(calculationResult){
@@ -40,16 +40,16 @@ const chartConfig = {
 
             cr.forEach(group => {
                var reduceResult = group.reduce((prev, cur) => {
-                    return { 
+                    return {
                         x: prev.x ? prev.x : cur.item1,
                         y: (prev.y ? prev.y + (1/calculationResult.length) : 1/calculationResult.length).toFixed(2)
                     }
-                }, 
+                },
                 { });
 
                 toReturn.push(reduceResult);
             });
-            
+
             return toReturn;
         },
         "count": function(calculationResult){
@@ -58,17 +58,56 @@ const chartConfig = {
 
             cr.forEach(group => {
                var reduceResult = group.reduce((prev, cur) => {
-                    return { 
+                    return {
                         x: prev.x ? prev.x : cur.item1,
                         y: prev.y ? prev.y + 1 : 1
                     }
-                }, 
+                },
                 { });
 
                 toReturn.push(reduceResult);
             });
-            
+
             return toReturn;
+        }
+    },
+    chartFunctions: {
+        "pie": function(aggregateFunctionName, calculationResult){
+
+            var cols = [];
+            calculationResult.forEach(res => {
+                var resY = parseFloat(res.y);
+
+                if(aggregateFunctionName === "percent"){
+                    resY *= 100.0;
+                }
+
+                cols.push([`${aggregateFunctionName}(${res.x})`, resY]);
+            });
+
+            return {
+                data: {
+                    columns: cols,
+                    type: 'pie'
+                },
+                pie: {
+                    label: {
+                        format: function (value) {
+                            if(aggregateFunctionName === "percent"){
+                                return value+'%';
+                            }
+
+                            return value;
+                        }
+                    }
+                }
+            };
+        },
+        "bar": {
+
+        },
+        "line": {
+
         }
     }
 };
@@ -78,29 +117,26 @@ class TemplateVisualizerComponent extends React.Component {
         this.props.calculateTemplate(this.props.match.params.id);
     }
 
-    render(){       
-        var calculateChartValuesResult = [];
-
+    render(){
         if(this.props.calculationResult){
             var calculationResult = this.props.calculationResult.calculationResult;
             var aggregateFunction = this.props.calculationResult.template.aggregateFunction;
+            var chartType = this.props.calculationResult.template.chartType;
 
-            calculateChartValuesResult = chartConfig.aggregateFunctions[aggregateFunction](calculationResult);     
+            var calculateChartValuesResult = chartConfig.aggregateFunctions[aggregateFunction](calculationResult);
+            var c3Props = chartConfig.chartFunctions[chartType](aggregateFunction, calculateChartValuesResult);
+
+            return (
+                <div className="row">
+                    <div className="col-sm-2"></div>
+                    <div className="col-sm-8">
+                        <C3Chart {...c3Props} />
+                    </div>
+                </div>
+            );
         }
-        
-        return (
-            <div>
-                <div>
-                    {JSON.stringify(this.props.calculationResult)}
-                </div>
-                <div>
-                    ---------------------------------
-                </div>
-                <div>
-                    {JSON.stringify(calculateChartValuesResult)}
-                </div>
-            </div>
-        );
+
+        return <div>Loading...</div>
     }
 }
 
