@@ -176,3 +176,21 @@ export const calculateTemplate = templateId => async dispatch => {
 
     dispatch({ type: CALCULATE_TEMPLATE, payload: response.data });
 };
+
+export const login = token => dispatch => {
+    return dispatch => {
+        dispatch({
+            type: LOGIN,
+            payload: token
+        });
+    }
+};
+
+export const logout = () => dispatch => {
+    return dispatch => {
+        dispatch({
+            type: LOGIN,
+            payload: ""
+        });
+    };
+};

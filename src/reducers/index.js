@@ -14,7 +14,9 @@ import {
     SET_TEMPLATE_DATA_SOURCE_FILTER_RIGHT_VALUE,
     SET_TEMPLATE_AGGREGATE_FUNCTION,
     GET_TEMPLATE,
-    CALCULATE_TEMPLATE
+    CALCULATE_TEMPLATE,
+    LOGIN,
+    LOGOUT
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -121,6 +123,23 @@ const templateCalculationResultReducer = (calculationResult = null, action) => {
     return calculationResult;
 }
 
+const authReducer = (state = {
+    user: '',
+    isAuthenticated: false
+}, action) => {
+    switch (action.type) {
+        case LOGIN:
+            state = { ...state, user: action.payload, isAuthenticated: true };
+            break;
+        case LOGOUT:
+            state = { ...state, user: '', isAuthenticated: false };
+            break;
+        default:
+            break;
+    };
+    return state;
+};
+
 export default combineReducers(
     {
         form: formReducer,
@@ -136,6 +155,7 @@ export default combineReducers(
         templateDataSourceFilterRightValue: templateDataSourceFilterRightValueReducer,
         templateAggregateFunction: templateAggregateFunctionReducer,
         currentTemplate: currentTemplateReducer,
-        templateCalculationResult: templateCalculationResultReducer
+        templateCalculationResult: templateCalculationResultReducer,
+        auth: authReducer
     }
 );
