@@ -16,7 +16,9 @@ import {
     CREATE_TEMPLATE,
     GET_TEMPLATE,
     REMOVE_TEMPLATE,
-    CALCULATE_TEMPLATE
+    CALCULATE_TEMPLATE,
+    LOGIN,
+    LOGOUT
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -189,7 +191,7 @@ export const login = token => dispatch => {
 export const logout = () => dispatch => {
     return dispatch => {
         dispatch({
-            type: LOGIN,
+            type: LOGOUT,
             payload: ""
         });
     };
