@@ -24,13 +24,28 @@ import chartClient from '../api/charterClient'
 import history from '../utils/history'
 import charterClient from '../api/charterClient';
 
-export const createDataSource = formValues => async dispatch => {
+export const createDataSource = formValues => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user;
+
     var formData = new FormData();
 
     formData.append('name', formValues.name);
     formData.append('file', formValues.dataSource);
 
-    var response = await chartClient.post('/dataSource/create', formData);
+    var response = await chartClient.post(
+        '/dataSource/create', 
+        formData,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: CREATE_DATA_SOURCE, payload: response.data.id });
 
@@ -142,6 +157,12 @@ export const getTemplate = templateId => async dispatch => {
 export const createTemplate = () => async (dispatch, getState) => {
     var state = getState();
 
+    if(!state.auth.isAuthenticated){
+        history.push('/');
+    }
+    
+    var token = state.auth.user;
+
     var template = {
         name: state.templateName,
         dataSourceId: state.templateDataSource.id,
@@ -156,7 +177,14 @@ export const createTemplate = () => async (dispatch, getState) => {
         templateAggregateFunction: state.templateAggregateFunction
     };
 
-    var response = await chartClient.post('/template/create', template);
+    var response = await chartClient.post(
+        '/template/create', 
+        template, 
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: CREATE_TEMPLATE, payload: response.data.id });
 
