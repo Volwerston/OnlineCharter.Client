@@ -1,0 +1,5 @@
+{
+    "GOOGLE_AUTH_CALLBACK_URL": "https://localhost:44322/auth/token",
+    "GOOGLE_CLIENT_ID": "676553562771-4iqeo7aciq7v9f63ucinvgolthi28s5c.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET": "KNXh1BOCYmj8ptEmAiXSbfDk"
+}

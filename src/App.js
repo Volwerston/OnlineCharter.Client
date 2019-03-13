@@ -7,6 +7,8 @@ import DataSourceEditFormComponent from './components/DataSourceEditFormComponen
 import TemplateCreateFormComponent from './components/TemplateCreateFormComponent';
 import TemplateInfoComponent from './components/TemplateInfoComponent';
 import TemplateVisualizerComponent from './components/TemplateVisualizerComponent';
+import Login from './components/Login';
+import Logout from './components/Logout'
 
 class App extends Component {
   render(){
@@ -14,6 +16,8 @@ class App extends Component {
       <Router history={history}>
         <div>
           <Route path="/" exact component={DataSourceCreateFormComponent} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/logout" exact component={Logout} />
           <Route path="/dataSource/:id" exact component={DataSourceEditFormComponent} />
           <Route path="/template/create" exact component={TemplateCreateFormComponent} />
           <Route path="/template/info/:id" exact component={TemplateInfoComponent} />

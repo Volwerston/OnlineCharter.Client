@@ -77,7 +77,7 @@ export const setTemplateDataSource = dataSourceId => (dispatch, getState) => {
     console.log("Data sources: " + dataSources);
 
     var selectedDataSource = dataSources.filter(ds => ds.id === dataSourceId)[0];
-    if(!selectedDataSource){
+    if (!selectedDataSource) {
         selectedDataSource = null;
     }
 
@@ -130,14 +130,14 @@ export const setTemplateAggregateFunction = aggregateFunction => {
     return {
         type: SET_TEMPLATE_AGGREGATE_FUNCTION,
         payload: aggregateFunction
-    };  
+    };
 };
 
 export const getTemplate = templateId => async dispatch => {
     var response = await chartClient.get(`/template/${templateId}`);
 
     dispatch({ type: GET_TEMPLATE, payload: response.data });
-};  
+};
 
 export const createTemplate = () => async (dispatch, getState) => {
     var state = getState();
@@ -180,19 +180,18 @@ export const calculateTemplate = templateId => async dispatch => {
 };
 
 export const login = token => dispatch => {
-    return dispatch => {
-        dispatch({
-            type: LOGIN,
-            payload: token
-        });
-    }
+    dispatch({
+        type: LOGIN,
+        payload: token
+    });
 };
 
 export const logout = () => dispatch => {
-    return dispatch => {
-        dispatch({
-            type: LOGOUT,
-            payload: ""
-        });
-    };
+    console.log("HEY 2!");
+    dispatch({
+        type: LOGOUT,
+        payload: ''
+    });
+
+    history.push('/');
 };
