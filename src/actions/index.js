@@ -215,7 +215,6 @@ export const login = token => dispatch => {
 };
 
 export const logout = () => dispatch => {
-    console.log("HEY 2!");
     dispatch({
         type: LOGOUT,
         payload: ''

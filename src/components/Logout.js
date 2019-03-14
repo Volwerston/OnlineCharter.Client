@@ -7,7 +7,6 @@ import config from "../config.json";
 
 class Logout extends Component {
     logout = () => {
-        console.log("HEY 1!");
         this.props.logout();
     };
 
@@ -36,7 +35,6 @@ class Logout extends Component {
         
         return(
             <div>
-                <h1>Logout</h1>
                 {content}
             </div>
         );

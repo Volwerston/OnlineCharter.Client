@@ -42,7 +42,7 @@ class Login extends Component {
           <div>
             <GoogleLogin
               clientId={config.GOOGLE_CLIENT_ID}
-              buttonText="Google Login"
+              buttonText="Login"
               onSuccess={this.googleResponse}
               onFailure={this.onFailure}
             />
@@ -50,7 +50,7 @@ class Login extends Component {
         );
   
       return (
-        <div><h1>Login</h1>
+        <div>
             {content}
         </div>
       );
