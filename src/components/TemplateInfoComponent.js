@@ -3,8 +3,16 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 import { getTemplate, removeTemplate } from '../actions'
+import history from '../utils/history'
 
 class TemplateInfoComponent extends React.Component {
+
+    componentWillMount(){
+        if(!this.props.user.isAuthenticated){
+            history.push('/');
+        }
+    }
+
     componentDidMount(){
         this.props.getTemplate(this.props.match.params.id);
     }
@@ -148,7 +156,8 @@ class TemplateInfoComponent extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        template: state.currentTemplate
+        template: state.currentTemplate,
+        user: state.auth
     };
 }
 

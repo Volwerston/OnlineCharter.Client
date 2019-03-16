@@ -5,8 +5,15 @@ import FileInput from './FileInput'
 import {createDataSource} from '../actions'
 import {renderField} from '../utils/renderField'
 import { required, xml } from '../utils/validations'
+import history from '../utils/history'
 
 class DataSourceCreateFormComponent extends React.Component {
+    componentWillMount(){
+        if(!this.props.user.isAuthenticated){
+            history.push('/');
+        }
+    }
+
     render() {
         return (
             <div className="row">
@@ -58,8 +65,14 @@ class DataSourceCreateFormComponent extends React.Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        user: state.auth
+    }
+};
+
 var createReduxForm = reduxForm({
     form: 'createDataSource',
 })(DataSourceCreateFormComponent)
 
-export default connect(null, { createDataSource })(createReduxForm)
+export default connect(mapStateToProps, { createDataSource })(createReduxForm)

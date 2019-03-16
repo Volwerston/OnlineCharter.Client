@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { getDataSource, updateDataSource, removeDataSource } from '../actions'
+import history from '../utils/history'
 
 const required = value => value ? undefined : 'Required'
 
@@ -12,6 +13,12 @@ class DataSourceEditFormComponent extends React.Component {
         this.state = {
             dataSourceName: null
         };
+    }
+
+    componentWillMount(){
+        if(!this.props.user.isAuthenticated){
+            history.push('/');
+        }
     }
 
     componentDidMount() {
@@ -114,7 +121,8 @@ class DataSourceEditFormComponent extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        dataSource: state.currentDataSource
+        dataSource: state.currentDataSource,
+        user: state.auth
     };
 }
 

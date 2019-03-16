@@ -10,8 +10,16 @@ import TemplateMapFunctionComponent from './TemplateMapFunctionComponent'
 import TemplateDataSourceFilterComponent from './TemplateDataSourceFilterComponent'
 import TemplateAggregateFunctionComponent from './TemplateAggregateFunctionComponent'
 
+import history from '../utils/history'
+
 class TemplateCreateFormComponent extends React.Component {
     
+    componentWillMount(){
+        if(!this.props.user.isAuthenticated){
+            history.push('/');
+        }
+    }
+
     componentDidMount(){
         this.props.getUserDataSources(1);
     }
@@ -44,7 +52,8 @@ class TemplateCreateFormComponent extends React.Component {
 
 function mapStateToProps(state){
     return {
-        dataSources: state.userDataSources
+        dataSources: state.userDataSources,
+        user: state.auth
     };
 }
 

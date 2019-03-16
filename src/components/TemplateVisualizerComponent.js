@@ -6,6 +6,7 @@ import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 
 import { calculateTemplate } from '../actions'
+import history from '../utils/history'
 
 Array.prototype.groupBy = function (prop) {
     return this.reduce(function (groups, item) {
@@ -202,6 +203,13 @@ const chartConfig = {
 };
 
 class TemplateVisualizerComponent extends React.Component {
+
+    componentWillMount(){
+        if(!this.props.user.isAuthenticated){
+            history.push('/');
+        }
+    }
+
     componentDidMount() {
         this.props.calculateTemplate(this.props.match.params.id);
     }
@@ -260,7 +268,8 @@ class TemplateVisualizerComponent extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        calculationResult: state.templateCalculationResult
+        calculationResult: state.templateCalculationResult,
+        user: state.auth
     };
 }
 
