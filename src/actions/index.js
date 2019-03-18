@@ -31,7 +31,7 @@ export const createDataSource = formValues => async (dispatch, getState) => {
         return;
     }
     
-    var token = state.auth.user;
+    var token = state.auth.user.token;
 
     var formData = new FormData();
 
@@ -39,7 +39,7 @@ export const createDataSource = formValues => async (dispatch, getState) => {
     formData.append('file', formValues.dataSource);
 
     var response = await chartClient.post(
-        '/dataSource/create', 
+        `/dataSource/create`, 
         formData,
         {
             headers: {
@@ -52,30 +52,86 @@ export const createDataSource = formValues => async (dispatch, getState) => {
     history.push(`/dataSource/${response.data.id}`);
 }
 
-export const getDataSource = id => async dispatch => {
-    var response = await chartClient.get(`/dataSource/${id}`);
+export const getDataSource = id => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    var response = await chartClient.get(
+        `/dataSource/${id}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: GET_DATA_SOURCE, payload: response.data });
 }
 
-export const updateDataSource = (id, dataSourceName) => async dispatch => {
-    var response = await chartClient.patch(`/dataSource/${id}/update`, {
+export const updateDataSource = (id, dataSourceName) => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    var response = await chartClient.patch(`/dataSource/${id}/update`, 
+    {
         name: dataSourceName
+    },
+    {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
 
     dispatch({ type: UPDATE_DATA_SOURCE, payload: id });
 }
 
-export const removeDataSource = id => async dispatch => {
-    var response = await charterClient.delete(`/dataSource/${id}/remove`);
+export const removeDataSource = id => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    await charterClient.delete(
+        `/dataSource/${id}/remove`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     history.push('/');
 
     dispatch({ type: REMOVE_DATA_SOURCE, payload: id });
 }
 
-export const getUserDataSources = userId => async dispatch => {
-    var response = await chartClient.get(`/dataSource/user/${userId}/all`);
+export const getUserDataSources = userId => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    var response = await chartClient.get(
+        `/dataSource/user/${userId}/all`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: GET_USER_DATA_SOURCES, payload: response.data });
 }
@@ -148,8 +204,22 @@ export const setTemplateAggregateFunction = aggregateFunction => {
     };
 };
 
-export const getTemplate = templateId => async dispatch => {
-    var response = await chartClient.get(`/template/${templateId}`);
+export const getTemplate = templateId => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    var response = await chartClient.get(
+        `/template/${templateId}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: GET_TEMPLATE, payload: response.data });
 };
@@ -191,26 +261,52 @@ export const createTemplate = () => async (dispatch, getState) => {
     history.push(`/template/info/${response.data.id}`);
 };
 
-export const removeTemplate = templateId => async dispatch => {
+export const removeTemplate = templateId => async (dispatch, getState) => {
+    var state = getState();
 
-    var response = await chartClient.delete(`/template/${templateId}`);
+    if(!state.auth.isAuthenticated){
+        history.push('/');
+    }
+    
+    var token = state.auth.user;
+
+    var response = await chartClient.delete(
+        `/template/${templateId}`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: REMOVE_TEMPLATE, payload: templateId });
 
     history.push('/template/create');
 };
 
-export const calculateTemplate = templateId => async dispatch => {
+export const calculateTemplate = templateId => async (dispatch, getState) => {
+    var state = getState();
 
-    var response = await chartClient.get(`/template/${templateId}/calculate`);
+    if(!state.auth.isAuthenticated){
+        history.push('/');
+    }
+    
+    var token = state.auth.user;
+
+    var response = await chartClient.get(
+        `/template/${templateId}/calculate`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
     dispatch({ type: CALCULATE_TEMPLATE, payload: response.data });
 };
 
-export const login = token => dispatch => {
+export const login = loginPayload => dispatch => {
     dispatch({
         type: LOGIN,
-        payload: token
+        payload: loginPayload
     });
 };
 

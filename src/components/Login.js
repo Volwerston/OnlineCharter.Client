@@ -23,8 +23,8 @@ class Login extends Component {
         .then(r => {
           r.json().then(user => {
             const token = user.token;
-            console.log(token);
-            this.props.login(token);
+            const id = user.id;
+            this.props.login({ token: token, id: id });
           });
         })
     };

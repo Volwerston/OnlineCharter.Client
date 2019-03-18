@@ -132,7 +132,7 @@ const authReducer = (state = {
             state = { ...state, user: action.payload, isAuthenticated: true };
             break;
         case LOGOUT:
-            state = { ...state, user: '', isAuthenticated: false };
+            state = { ...state, user: { token: '', id: ''}, isAuthenticated: false };
             break;
         default:
             break;
