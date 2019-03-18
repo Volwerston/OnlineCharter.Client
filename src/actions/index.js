@@ -49,7 +49,7 @@ export const createDataSource = formValues => async (dispatch, getState) => {
 
     dispatch({ type: CREATE_DATA_SOURCE, payload: response.data.id });
 
-    history.push(`/dataSource/${response.data.id}`);
+    history.push(`/data-source/${response.data.id}/info`);
 }
 
 export const getDataSource = id => async (dispatch, getState) => {
@@ -116,7 +116,7 @@ export const removeDataSource = id => async (dispatch, getState) => {
     dispatch({ type: REMOVE_DATA_SOURCE, payload: id });
 }
 
-export const getUserDataSources = userId => async (dispatch, getState) => {
+export const getUserDataSources = () => async (dispatch, getState) => {
     var state = getState();
 
     if(!state.auth.isAuthenticated){
@@ -126,7 +126,7 @@ export const getUserDataSources = userId => async (dispatch, getState) => {
     var token = state.auth.user.token;
 
     var response = await chartClient.get(
-        `/dataSource/user/${userId}/all`,
+        `/dataSource/user/all`,
         {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -231,7 +231,7 @@ export const createTemplate = () => async (dispatch, getState) => {
         history.push('/');
     }
     
-    var token = state.auth.user;
+    var token = state.auth.user.token;
 
     var template = {
         name: state.templateName,
@@ -258,7 +258,7 @@ export const createTemplate = () => async (dispatch, getState) => {
 
     dispatch({ type: CREATE_TEMPLATE, payload: response.data.id });
 
-    history.push(`/template/info/${response.data.id}`);
+    history.push(`/template/${response.data.id}/info`);
 };
 
 export const removeTemplate = templateId => async (dispatch, getState) => {
@@ -268,7 +268,7 @@ export const removeTemplate = templateId => async (dispatch, getState) => {
         history.push('/');
     }
     
-    var token = state.auth.user;
+    var token = state.auth.user.token;
 
     var response = await chartClient.delete(
         `/template/${templateId}`,
@@ -290,7 +290,7 @@ export const calculateTemplate = templateId => async (dispatch, getState) => {
         history.push('/');
     }
     
-    var token = state.auth.user;
+    var token = state.auth.user.token;
 
     var response = await chartClient.get(
         `/template/${templateId}/calculate`,

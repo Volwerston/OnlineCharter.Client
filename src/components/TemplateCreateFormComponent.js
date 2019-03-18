@@ -21,7 +21,7 @@ class TemplateCreateFormComponent extends React.Component {
     }
 
     componentDidMount(){
-        this.props.getUserDataSources(1);
+        this.props.getUserDataSources();
     }
 
     render(){

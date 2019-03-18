@@ -6,53 +6,53 @@ import { logout } from "../actions";
 import config from "../config.json";
 
 class Logout extends Component {
-    logout = () => {
-        this.props.logout();
-    };
+  logout = () => {
+    this.props.logout();
+  };
 
-    onFailure = (error) => {
-        alert(error);
-    };
+  onFailure = (error) => {
+    alert(error);
+  };
 
-    render(){
-        let content = !this.props.auth.isAuthenticated ?
-        (
-          <div>
-            <Redirect to={{
-              pathname: '/'
-            }} />
-          </div>
-        ) :
-        (
-          <div>
-            <GoogleLogout 
-            buttonText="Logout" 
+  render() {
+    let content = !this.props.auth.isAuthenticated ?
+      (
+        <div>
+          <Redirect to={{
+            pathname: '/'
+          }} />
+        </div>
+      ) :
+      (
+        <div>
+          <GoogleLogout
+            buttonText="Logout"
             clientId={config.GOOGLE_CLIENT_ID}
             onLogoutSuccess={this.logout}
             onFailure={this.onFailure} />
-          </div>
-        );
-        
-        return(
-            <div>
-                {content}
-            </div>
-        );
-    }
+        </div>
+      );
+
+    return (
+      <div>
+        {content}
+      </div>
+    );
+  }
 };
 
 const mapStateToProps = (state) => {
-    return {
-      auth: state.auth
-    };
+  return {
+    auth: state.auth
   };
-  
-  const mapDispatchToProps = (dispatch) => {
-    return {
-      logout: () => {
-        dispatch(logout());
-      }
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    logout: () => {
+      dispatch(logout());
     }
-  };
-  
-  export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Logout));
+  }
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Logout));

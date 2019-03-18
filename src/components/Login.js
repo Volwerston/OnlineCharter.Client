@@ -24,7 +24,8 @@ class Login extends Component {
           r.json().then(user => {
             const token = user.token;
             const id = user.id;
-            this.props.login({ token: token, id: id });
+            const name = user.name;
+            this.props.login({ token: token, id: id, name: name });
           });
         })
     };

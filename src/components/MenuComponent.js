@@ -1,9 +1,32 @@
 import React from 'react'
 import AuthComponent from './AuthComponent';
 import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 class MenuComponent extends React.Component {
     render() {
+
+        var rightSide = (
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item">
+                    <AuthComponent />
+                </li>
+            </ul>
+        );
+
+        if (this.props.auth.isAuthenticated) {
+            rightSide = (
+                <ul class="nav navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <Link to="#" class="nav-link">Hello, {this.props.auth.user.name}</Link>
+                    </li>
+                    <li class="nav-item">
+                        <AuthComponent />
+                    </li>
+                </ul>
+            );
+        }
+
         return (
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -24,14 +47,16 @@ class MenuComponent extends React.Component {
                             <Link class="nav-link" to="#">MY TEMPLATES</Link>
                         </li>
                     </ul>
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <AuthComponent />
-                        </li>
-                    </ul>
+                    {rightSide}
                 </div>
             </nav>);
     }
 }
 
-export default MenuComponent
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+}
+
+export default connect(mapStateToProps)(MenuComponent)
