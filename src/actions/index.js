@@ -93,7 +93,7 @@ export const updateDataSource = (id, dataSourceName) => async (dispatch, getStat
         }
     });
 
-    dispatch({ type: UPDATE_DATA_SOURCE, payload: id });
+    dispatch({ type: UPDATE_DATA_SOURCE, payload: response.data });
 }
 
 export const removeDataSource = id => async (dispatch, getState) => {
@@ -343,4 +343,9 @@ export const clearResults = () => dispatch => {
         type: GET_DATA_SOURCE,
         payload: null
     });
+
+    dispatch({
+        type: UPDATE_DATA_SOURCE,
+        payload: null
+    })
 };

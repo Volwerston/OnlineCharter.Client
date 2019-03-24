@@ -50,6 +50,11 @@ class TemplateCreateFormComponent extends React.Component {
                 dataSources = this.props.dataSources.result.dataSources;
             }
         }
+        else{
+            return (
+                <div>Loading...</div>
+            );
+        }
 
         if(this.props.createTemplateResult && this.props.createTemplateResult.error){
             errorMessage = (
