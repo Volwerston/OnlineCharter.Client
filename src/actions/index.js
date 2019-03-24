@@ -223,7 +223,7 @@ export const getTemplate = templateId => async (dispatch, getState) => {
             }
         });
 
-    dispatch({ type: GET_TEMPLATE, payload: response.data });
+    dispatch({ type: GET_TEMPLATE, payload: response.data.result });
 };
 
 export const createTemplate = () => async (dispatch, getState) => {
@@ -261,7 +261,7 @@ export const createTemplate = () => async (dispatch, getState) => {
     dispatch({ type: CREATE_TEMPLATE, payload: response.data });
 
     if(!response.data.error){
-        history.push(`/template/${response.data.id}/info`);
+        history.push(`/template/${response.data.result}/info`);
     }
 };
 
@@ -304,7 +304,7 @@ export const calculateTemplate = templateId => async (dispatch, getState) => {
             }
         });
 
-    dispatch({ type: CALCULATE_TEMPLATE, payload: response.data });
+    dispatch({ type: CALCULATE_TEMPLATE, payload: response.data.result });
 };
 
 export const login = loginPayload => dispatch => {
