@@ -258,9 +258,11 @@ export const createTemplate = () => async (dispatch, getState) => {
             }
         });
 
-    dispatch({ type: CREATE_TEMPLATE, payload: response.data.id });
+    dispatch({ type: CREATE_TEMPLATE, payload: response.data });
 
-    history.push(`/template/${response.data.id}/info`);
+    if(!response.data.error){
+        history.push(`/template/${response.data.id}/info`);
+    }
 };
 
 export const removeTemplate = templateId => async (dispatch, getState) => {
@@ -329,6 +331,11 @@ export const clearResults = () => dispatch => {
 
     dispatch({
         type: GET_USER_DATA_SOURCES,
+        payload: null
+    });
+
+    dispatch({
+        type: CREATE_TEMPLATE,
         payload: null
     });
 };

@@ -44,12 +44,22 @@ class TemplateCreateFormComponent extends React.Component {
                         </button>
                     </div>
                 );
-    
             }
             
             if(this.props.dataSources.result){
                 dataSources = this.props.dataSources.result.dataSources;
             }
+        }
+
+        if(this.props.createTemplateResult && this.props.createTemplateResult.error){
+            errorMessage = (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {this.props.createTemplateResult.error}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            );
         }
 
         return (
@@ -85,7 +95,8 @@ class TemplateCreateFormComponent extends React.Component {
 function mapStateToProps(state) {
     return {
         dataSources: state.userDataSources,
-        user: state.auth
+        user: state.auth,
+        createTemplateResult: state.createTemplateResult
     };
 }
 
