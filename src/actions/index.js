@@ -47,9 +47,11 @@ export const createDataSource = formValues => async (dispatch, getState) => {
             }
         });
 
-    dispatch({ type: CREATE_DATA_SOURCE, payload: response.data.id });
+    dispatch({ type: CREATE_DATA_SOURCE, payload: response.data });
 
-    history.push(`/data-source/${response.data.id}/info`);
+    if(response.data.result){
+        history.push(`/data-source/${response.data.result.id}/info`);
+    }
 }
 
 export const getDataSource = id => async (dispatch, getState) => {
@@ -317,4 +319,11 @@ export const logout = () => dispatch => {
     });
 
     history.push('/');
+};
+
+export const clearResults = () => dispatch => {
+    dispatch({
+        type: CREATE_DATA_SOURCE,
+        payload: null
+    });
 };

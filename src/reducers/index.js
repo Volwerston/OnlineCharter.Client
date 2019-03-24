@@ -16,7 +16,8 @@ import {
     GET_TEMPLATE,
     CALCULATE_TEMPLATE,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    CREATE_DATA_SOURCE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -140,6 +141,14 @@ const authReducer = (state = {
     return state;
 };
 
+const createDataSourceResultReducer = (result = null, action) => {
+    if(action.type === CREATE_DATA_SOURCE){
+        return action.payload;
+    }
+
+    return result;
+};
+
 export default combineReducers(
     {
         form: formReducer,
@@ -156,6 +165,7 @@ export default combineReducers(
         templateAggregateFunction: templateAggregateFunctionReducer,
         currentTemplate: currentTemplateReducer,
         templateCalculationResult: templateCalculationResultReducer,
-        auth: authReducer
+        auth: authReducer,
+        createDataSourceResult: createDataSourceResultReducer
     }
 );
