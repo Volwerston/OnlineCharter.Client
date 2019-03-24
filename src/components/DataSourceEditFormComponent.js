@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { getDataSource, updateDataSource, removeDataSource } from '../actions'
+import { getDataSource, updateDataSource, removeDataSource, clearResults } from '../actions'
 import history from '../utils/history'
 
 const required = value => value ? undefined : 'Required'
@@ -21,15 +21,21 @@ class DataSourceEditFormComponent extends React.Component {
         }
     }
 
+    componentWillUnmount(){
+        this.props.clearResults();
+    }
+
     componentDidMount() {
         this.props.getDataSource(this.props.match.params.id);
     }
 
     componentWillReceiveProps(nextProps) {
-        this.setState({
-            dataSourceName: nextProps.dataSource.name,
-            dataSourceNameAlert: null
-        });
+        if(nextProps.dataSource && nextProps.dataSource.result){
+            this.setState({
+                dataSourceName: nextProps.dataSource.result.name,
+                dataSourceNameAlert: null
+            });
+        }
     }
 
     updateDataSourceName = event => {
@@ -60,6 +66,17 @@ class DataSourceEditFormComponent extends React.Component {
             );
         }
         else {
+
+            if(this.props.dataSource.error){
+                return (
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {this.props.dataSource.error}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>);
+            }
+
             return (
                 <div className="row">
                     <div className="col-sm-3"></div>
@@ -99,13 +116,13 @@ class DataSourceEditFormComponent extends React.Component {
                         </div>
                         <div className="row">
                             <div className="col-sm-12">
-                                <label>Created: {new Date(this.props.dataSource.created).toUTCString()}</label>
+                                <label>Created: {new Date(this.props.dataSource.result.created).toUTCString()}</label>
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-sm-12">
                                 <label>Schema:</label>
-                                <pre>{JSON.stringify(this.props.dataSource.schema, null, "\t")}</pre>
+                                <pre>{JSON.stringify(this.props.dataSource.result.schema, null, "\t")}</pre>
                             </div>
                         </div>
                     </div>
@@ -126,4 +143,4 @@ function mapStateToProps(state) {
     };
 }
 
-export default connect(mapStateToProps, { getDataSource, updateDataSource, removeDataSource })(DataSourceEditFormComponent)
+export default connect(mapStateToProps, { getDataSource, updateDataSource, removeDataSource, clearResults })(DataSourceEditFormComponent)

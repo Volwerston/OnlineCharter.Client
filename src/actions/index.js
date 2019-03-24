@@ -50,7 +50,7 @@ export const createDataSource = formValues => async (dispatch, getState) => {
     dispatch({ type: CREATE_DATA_SOURCE, payload: response.data });
 
     if(response.data.result){
-        history.push(`/data-source/${response.data.result.id}/info`);
+        history.push(`/data-source/${response.data.result}/info`);
     }
 }
 
@@ -146,7 +146,7 @@ export const setTemplateName = templateName => {
 }
 
 export const setTemplateDataSource = dataSourceId => (dispatch, getState) => {
-    var dataSources = getState().userDataSources;
+    var dataSources = getState().userDataSources.result.dataSources;
     console.log("Data sources: " + dataSources);
 
     var selectedDataSource = dataSources.filter(ds => ds.id === dataSourceId)[0];
@@ -336,6 +336,11 @@ export const clearResults = () => dispatch => {
 
     dispatch({
         type: CREATE_TEMPLATE,
+        payload: null
+    });
+
+    dispatch({
+        type: GET_DATA_SOURCE,
         payload: null
     });
 };
