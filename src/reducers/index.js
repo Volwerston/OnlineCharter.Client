@@ -28,9 +28,9 @@ const currentDataSourceReducer = (currentDataSource = null, action) => {
     return currentDataSource;
 }
 
-const userDataSourcesReducer = (userDataSources = [], action) => {
+const userDataSourcesReducer = (userDataSources = null, action) => {
     if (action.type === GET_USER_DATA_SOURCES) {
-        return action.payload.dataSources;
+        return action.payload;
     }
 
     return userDataSources;

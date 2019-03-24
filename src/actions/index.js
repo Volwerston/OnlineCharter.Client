@@ -326,4 +326,9 @@ export const clearResults = () => dispatch => {
         type: CREATE_DATA_SOURCE,
         payload: null
     });
+
+    dispatch({
+        type: GET_USER_DATA_SOURCES,
+        payload: null
+    });
 };

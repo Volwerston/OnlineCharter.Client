@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { getUserDataSources, createTemplate } from '../actions'
+import { getUserDataSources, createTemplate, clearResults } from '../actions'
 
 import TemplateSourceComponent from './TemplateSourceComponent'
 import TemplateChartTypeComponent from './TemplateChartTypeComponent'
@@ -13,35 +13,67 @@ import TemplateAggregateFunctionComponent from './TemplateAggregateFunctionCompo
 import history from '../utils/history'
 
 class TemplateCreateFormComponent extends React.Component {
-    
-    componentWillMount(){
-        if(!this.props.user.isAuthenticated){
+
+    componentWillMount() {
+        if (!this.props.user.isAuthenticated) {
             history.push('/');
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.props.getUserDataSources();
     }
 
-    render(){
+    componentWillUnmount() {
+        this.props.clearResults();
+    }
+
+    render() {
+
+        var errorMessage = null;
+        var dataSources = [];
+
+        if (this.props.dataSources) {
+
+            if(this.props.dataSources.error){
+                errorMessage = (
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {this.props.dataSources.error}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                );
+    
+            }
+            
+            if(this.props.dataSources.result){
+                dataSources = this.props.dataSources.result.dataSources;
+            }
+        }
+
         return (
-            <div className="row">
-                <div className="col-sm-2"></div>
-                <div className="col-sm-8">
-                    <TemplateSourceComponent dataSources={this.props.dataSources} />
-                    <TemplateChartTypeComponent />
-                    <br/>
-                    <TemplateKeySelectorComponent />
-                    <TemplateMapFunctionComponent />
-                    <TemplateDataSourceFilterComponent />
-                    <TemplateAggregateFunctionComponent/>
-                    <div className="row">
-                        <div className="col-sm-4"></div>
-                        <div className="col-sm-4">
-                            <button 
-                                className="btn btn-block btn-info"
-                                onClick={this.props.createTemplate}>Create</button>
+            <div>
+                <div className="row">
+                    {errorMessage}
+                </div>
+                <div className="row">
+                    <div className="col-sm-2"></div>
+                    <div className="col-sm-8">
+                        <TemplateSourceComponent dataSources={dataSources} />
+                        <TemplateChartTypeComponent />
+                        <br />
+                        <TemplateKeySelectorComponent />
+                        <TemplateMapFunctionComponent />
+                        <TemplateDataSourceFilterComponent />
+                        <TemplateAggregateFunctionComponent />
+                        <div className="row">
+                            <div className="col-sm-4"></div>
+                            <div className="col-sm-4">
+                                <button
+                                    className="btn btn-block btn-info"
+                                    onClick={this.props.createTemplate}>Create</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -50,11 +82,11 @@ class TemplateCreateFormComponent extends React.Component {
     }
 }
 
-function mapStateToProps(state){
+function mapStateToProps(state) {
     return {
         dataSources: state.userDataSources,
         user: state.auth
     };
 }
 
-export default connect(mapStateToProps, { getUserDataSources, createTemplate })(TemplateCreateFormComponent);
+export default connect(mapStateToProps, { getUserDataSources, createTemplate, clearResults })(TemplateCreateFormComponent);
