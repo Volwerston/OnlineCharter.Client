@@ -69,6 +69,16 @@ class DataSourceEditFormComponent extends React.Component {
                 </button>
             </div>);
         }
+
+        if(this.props.removeDataSourceResult && this.props.removeDataSourceResult.error){
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {this.props.removeDataSourceResult.error}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>);
+        }
         
         if (!this.props.dataSource) {
             return (
@@ -150,7 +160,8 @@ function mapStateToProps(state) {
     return {
         dataSource: state.currentDataSource,
         user: state.auth,
-        updateDataSourceResult: state.updateDataSourceResult
+        updateDataSourceResult: state.updateDataSourceResult,
+        removeDataSourceResult: state.removeDataSourceResult
     };
 }
 

@@ -105,7 +105,7 @@ export const removeDataSource = id => async (dispatch, getState) => {
     
     var token = state.auth.user.token;
 
-    await charterClient.delete(
+    var response = await charterClient.delete(
         `/dataSource/${id}/remove`,
         {
             headers: {
@@ -113,9 +113,11 @@ export const removeDataSource = id => async (dispatch, getState) => {
             }
         });
 
-    history.push('/');
-
-    dispatch({ type: REMOVE_DATA_SOURCE, payload: id });
+    if(!response.data.error){
+        history.push('/');
+    }
+    
+    dispatch({ type: REMOVE_DATA_SOURCE, payload: response.data });
 }
 
 export const getUserDataSources = () => async (dispatch, getState) => {
@@ -347,5 +349,10 @@ export const clearResults = () => dispatch => {
     dispatch({
         type: UPDATE_DATA_SOURCE,
         payload: null
-    })
+    });
+
+    dispatch({
+        type: REMOVE_DATA_SOURCE,
+        payload: null
+    });
 };

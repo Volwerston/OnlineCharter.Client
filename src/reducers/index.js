@@ -19,7 +19,8 @@ import {
     LOGOUT,
     CREATE_DATA_SOURCE,
     CREATE_TEMPLATE,
-    UPDATE_DATA_SOURCE
+    UPDATE_DATA_SOURCE,
+    REMOVE_DATA_SOURCE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -167,6 +168,14 @@ const updateDataSourceResultReducer = (result = null, action) => {
     return result;
 };
 
+const removeDataSourceResultReducer = (result = null, action) => {
+    if(action.type === REMOVE_DATA_SOURCE){
+        return action.payload;
+    }
+
+    return result;
+};
+
 export default combineReducers(
     {
         form: formReducer,
@@ -186,6 +195,7 @@ export default combineReducers(
         auth: authReducer,
         createDataSourceResult: createDataSourceResultReducer,
         createTemplateResult: createTemplateResultReducer,
-        updateDataSourceResult: updateDataSourceResultReducer
+        updateDataSourceResult: updateDataSourceResultReducer,
+        removeDataSourceResult: removeDataSourceResultReducer
     }
 );
