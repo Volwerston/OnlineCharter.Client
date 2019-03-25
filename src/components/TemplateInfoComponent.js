@@ -26,7 +26,17 @@ class TemplateInfoComponent extends React.Component {
             return <div>Loading...</div>;
         }
 
-        var filter = this.props.template.dataSourceFilter;
+        if(this.props.template.error){
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {this.props.template.error}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>);
+        }
+
+        var filter = this.props.template.result.dataSourceFilter;
 
         return (
             <div className="row">
@@ -47,7 +57,7 @@ class TemplateInfoComponent extends React.Component {
                         </div>
                         <div className="col-md-6">
                             <p className="text-right">
-                                {this.props.template.id}
+                                {this.props.template.result.id}
                             </p>
                         </div>
                     </div>
@@ -59,7 +69,7 @@ class TemplateInfoComponent extends React.Component {
                         </div>
                         <div className="col-md-6">
                             <p className="text-right">
-                                {this.props.template.dataSourceId}
+                                {this.props.template.result.dataSourceId}
                             </p>
                         </div>
                     </div>
@@ -71,7 +81,7 @@ class TemplateInfoComponent extends React.Component {
                         </div>
                         <div className="col-md-6">
                             <p className="text-right">
-                                {this.props.template.name}
+                                {this.props.template.result.name}
                             </p>
                         </div>
                     </div>
@@ -83,7 +93,7 @@ class TemplateInfoComponent extends React.Component {
                         </div>
                         <div className="col-md-6">
                             <p className="text-right">
-                                {this.props.template.created}
+                                {this.props.template.result.created}
                             </p>
                         </div>
                     </div>
@@ -108,7 +118,7 @@ class TemplateInfoComponent extends React.Component {
                         </div>
                         <div className="col-md-6">
                             <p className="text-right">
-                                {this.props.template.keySelector.returnValue}
+                                {this.props.template.result.keySelector.returnValue}
                             </p>
                         </div>
                     </div>
@@ -120,7 +130,7 @@ class TemplateInfoComponent extends React.Component {
                         </div>
                         <div className="col-md-6">
                             <p className="text-right">
-                                {this.props.template.mapFunction.returnValue}
+                                {this.props.template.result.mapFunction.returnValue}
                             </p>
                         </div>
                     </div>

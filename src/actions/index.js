@@ -225,7 +225,7 @@ export const getTemplate = templateId => async (dispatch, getState) => {
             }
         });
 
-    dispatch({ type: GET_TEMPLATE, payload: response.data.result });
+    dispatch({ type: GET_TEMPLATE, payload: response.data });
 };
 
 export const createTemplate = () => async (dispatch, getState) => {
@@ -353,6 +353,11 @@ export const clearResults = () => dispatch => {
 
     dispatch({
         type: REMOVE_DATA_SOURCE,
+        payload: null
+    });
+
+    dispatch({
+        type: GET_TEMPLATE,
         payload: null
     });
 };
