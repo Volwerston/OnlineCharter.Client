@@ -5,7 +5,7 @@ import 'c3/c3.css'
 import html2canvas from 'html2canvas'
 import jsPDF from 'jspdf'
 
-import { calculateTemplate } from '../actions'
+import { calculateTemplate, clearResults } from '../actions'
 import history from '../utils/history'
 
 Array.prototype.groupBy = function (prop) {
@@ -210,6 +210,10 @@ class TemplateVisualizerComponent extends React.Component {
         }
     }
 
+    componentWillUnmount(){
+        this.props.clearResults();
+    }
+
     componentDidMount() {
         this.props.calculateTemplate(this.props.match.params.id);
     }
@@ -228,10 +232,21 @@ class TemplateVisualizerComponent extends React.Component {
 
     render() {
         if (this.props.calculationResult) {
-            var calculationResult = this.props.calculationResult.calculationResult;
-            var aggregateFunction = this.props.calculationResult.template.aggregateFunction;
-            var chartType = this.props.calculationResult.template.chartType;
-            var mapFunction = this.props.calculationResult.template.mapFunction.returnValue;
+
+            if(this.props.calculationResult.error){
+                return (
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    {this.props.calculationResult.error}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>);
+            }
+
+            var calculationResult = this.props.calculationResult.result.calculationResult;
+            var aggregateFunction = this.props.calculationResult.result.template.aggregateFunction;
+            var chartType = this.props.calculationResult.result.template.chartType;
+            var mapFunction = this.props.calculationResult.result.template.mapFunction.returnValue;
 
             var calculateChartValuesResult = chartConfig.aggregateFunctions[aggregateFunction](calculationResult);
             var c3Props = chartConfig.chartFunctions[chartType](aggregateFunction, calculateChartValuesResult, mapFunction);
@@ -273,4 +288,4 @@ const mapStateToProps = state => {
     };
 }
 
-export default connect(mapStateToProps, { calculateTemplate })(TemplateVisualizerComponent)
+export default connect(mapStateToProps, { calculateTemplate, clearResults })(TemplateVisualizerComponent)

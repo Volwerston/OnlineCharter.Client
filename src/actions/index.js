@@ -307,8 +307,8 @@ export const calculateTemplate = templateId => async (dispatch, getState) => {
                 'Authorization': `Bearer ${token}`
             }
         });
-
-    dispatch({ type: CALCULATE_TEMPLATE, payload: response.data.result });
+    
+    dispatch({ type: CALCULATE_TEMPLATE, payload: response.data });
 };
 
 export const login = loginPayload => dispatch => {
@@ -365,6 +365,11 @@ export const clearResults = () => dispatch => {
 
     dispatch({
         type: REMOVE_TEMPLATE,
+        payload: null
+    });
+
+    dispatch({
+        type: CALCULATE_TEMPLATE,
         payload: null
     });
 };
