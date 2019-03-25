@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
-import { getTemplate, removeTemplate } from '../actions'
+import { getTemplate, removeTemplate, clearResults } from '../actions'
 import history from '../utils/history'
 
 class TemplateInfoComponent extends React.Component {
@@ -11,6 +11,10 @@ class TemplateInfoComponent extends React.Component {
         if(!this.props.user.isAuthenticated){
             history.push('/');
         }
+    }
+
+    componentWillUnmount(){
+        this.props.clearResults();
     }
 
     componentDidMount(){
@@ -30,6 +34,16 @@ class TemplateInfoComponent extends React.Component {
             return (
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                 {this.props.template.error}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>);
+        }
+
+        if(this.props.removeTemplateResult && this.props.removeTemplateResult.error){
+            return (
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {this.props.removeTemplateResult.error}
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -167,8 +181,9 @@ class TemplateInfoComponent extends React.Component {
 const mapStateToProps = state => {
     return {
         template: state.currentTemplate,
-        user: state.auth
+        user: state.auth,
+        removeTemplateResult: state.removeTemplateResult
     };
 }
 
-export default connect(mapStateToProps, { getTemplate, removeTemplate })(TemplateInfoComponent)
+export default connect(mapStateToProps, { getTemplate, removeTemplate, clearResults })(TemplateInfoComponent)

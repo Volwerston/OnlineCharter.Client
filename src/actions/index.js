@@ -284,9 +284,11 @@ export const removeTemplate = templateId => async (dispatch, getState) => {
             }
         });
 
-    dispatch({ type: REMOVE_TEMPLATE, payload: templateId });
+    dispatch({ type: REMOVE_TEMPLATE, payload: response.data });
 
-    history.push('/template/create');
+    if(!response.data.error){
+        history.push('/template/create');
+    }
 };
 
 export const calculateTemplate = templateId => async (dispatch, getState) => {
@@ -358,6 +360,11 @@ export const clearResults = () => dispatch => {
 
     dispatch({
         type: GET_TEMPLATE,
+        payload: null
+    });
+
+    dispatch({
+        type: REMOVE_TEMPLATE,
         payload: null
     });
 };

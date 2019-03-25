@@ -20,7 +20,8 @@ import {
     CREATE_DATA_SOURCE,
     CREATE_TEMPLATE,
     UPDATE_DATA_SOURCE,
-    REMOVE_DATA_SOURCE
+    REMOVE_DATA_SOURCE,
+    REMOVE_TEMPLATE
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -176,6 +177,14 @@ const removeDataSourceResultReducer = (result = null, action) => {
     return result;
 };
 
+const removeTemplateResultReducer = (result = null, action) => {
+    if(action.type === REMOVE_TEMPLATE){
+        return action.payload;
+    }
+
+    return result;
+};
+
 export default combineReducers(
     {
         form: formReducer,
@@ -196,6 +205,7 @@ export default combineReducers(
         createDataSourceResult: createDataSourceResultReducer,
         createTemplateResult: createTemplateResultReducer,
         updateDataSourceResult: updateDataSourceResultReducer,
-        removeDataSourceResult: removeDataSourceResultReducer
+        removeDataSourceResult: removeDataSourceResultReducer,
+        removeTemplateResult: removeTemplateResultReducer
     }
 );
