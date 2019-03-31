@@ -21,7 +21,8 @@ import {
     CREATE_TEMPLATE,
     UPDATE_DATA_SOURCE,
     REMOVE_DATA_SOURCE,
-    REMOVE_TEMPLATE
+    REMOVE_TEMPLATE,
+    GET_USER_TEMPLATES
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -185,6 +186,14 @@ const removeTemplateResultReducer = (result = null, action) => {
     return result;
 };
 
+const getUserTemplatesResultReducer = (result=null, action) => {
+    if(action.type === GET_USER_TEMPLATES){
+        return action.payload;
+    }
+
+    return result;
+};
+
 export default combineReducers(
     {
         form: formReducer,
@@ -206,6 +215,7 @@ export default combineReducers(
         createTemplateResult: createTemplateResultReducer,
         updateDataSourceResult: updateDataSourceResultReducer,
         removeDataSourceResult: removeDataSourceResultReducer,
-        removeTemplateResult: removeTemplateResultReducer
+        removeTemplateResult: removeTemplateResultReducer,
+        getUserTemplatesResult: getUserTemplatesResultReducer
     }
 );

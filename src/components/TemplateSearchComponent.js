@@ -1,7 +1,7 @@
 import React from 'react'
-import DataTable from 'react-data-table-component'
 import { connect } from 'react-redux'
-import { getUserDataSources, clearResults } from '../actions'
+import DataTable from 'react-data-table-component'
+import { getUserTemplates, clearResults } from '../actions'
 
 import history from '../utils/history'
 
@@ -24,11 +24,11 @@ const columns = [
 ];
 
 const onRowClicked = row => {
-    history.push(`/data-source/${row.id}/info`);
+    history.push(`/template/${row.id}/info`);
 };
 
-class DataSourceSearchComponent extends React.Component {
-
+class TemplateSearchComponent extends React.Component {
+    
     componentWillMount() {
         if (!this.props.user.isAuthenticated) {
             history.push('/');
@@ -36,20 +36,20 @@ class DataSourceSearchComponent extends React.Component {
     }
 
     componentDidMount() {
-        this.props.getUserDataSources();
+        this.props.getUserTemplates();
     }
 
     componentWillUnmount() {
         this.props.clearResults();
     }
 
-    render() {
-        if (this.props.dataSources) {
+    render(){
+        if (this.props.templates) {
 
-            if (this.props.dataSources.error) {
+            if (this.props.templates.error) {
                 return (
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        {this.props.dataSources.error}
+                        {this.props.templates.error}
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -57,12 +57,12 @@ class DataSourceSearchComponent extends React.Component {
                 );
             }
 
-            if (this.props.dataSources.result) {
+            if (this.props.templates.result) {
                 return (
                     <DataTable
-                        title="Data Sources"
+                        title="Templates"
                         columns={columns}
-                        data={this.props.dataSources.result.dataSources}
+                        data={this.props.templates.result.templates}
                         onRowClicked={onRowClicked}
                         pagination
                         paginationPerPage={5}
@@ -82,9 +82,9 @@ class DataSourceSearchComponent extends React.Component {
 
 const mapStateToProps = state => {
     return {
-        dataSources: state.userDataSources,
+        templates: state.getUserTemplatesResult,
         user: state.auth
     };
-}
+};
 
-export default connect(mapStateToProps, { getUserDataSources, clearResults })(DataSourceSearchComponent)
+export default connect(mapStateToProps, { getUserTemplates, clearResults })(TemplateSearchComponent)

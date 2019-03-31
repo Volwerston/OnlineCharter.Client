@@ -44,7 +44,7 @@ class MenuComponent extends React.Component {
                             <Link class="nav-link" to="/template/create">CREATE TEMPLATE</Link>
                         </li>
                         <li class="nav-item">
-                            <Link class="nav-link" to="#">MY TEMPLATES</Link>
+                            <Link class="nav-link" to="/templates">MY TEMPLATES</Link>
                         </li>
                     </ul>
                     {rightSide}

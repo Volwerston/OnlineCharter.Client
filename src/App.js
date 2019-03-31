@@ -10,6 +10,7 @@ import TemplateVisualizerComponent from './components/TemplateVisualizerComponen
 import MenuComponent from './components/MenuComponent'
 import LandingComponent from './components/LandingComponent';
 import DataSourceSearchComponent from './components/DataSourceSearchComponent';
+import TemplateSearchComponent from './components/TemplateSearchComponent';
 
 class App extends Component {
   render(){
@@ -26,6 +27,7 @@ class App extends Component {
           <Route path="/template/:id/info" exact component={TemplateInfoComponent} />
           <Route path="/template/:id/visualize" exact component={TemplateVisualizerComponent} />
           <Route path="/data-sources" exact component={DataSourceSearchComponent} />
+          <Route path="/templates" exact component={TemplateSearchComponent} />
         </div>
       </div>
     );

@@ -18,7 +18,8 @@ import {
     REMOVE_TEMPLATE,
     CALCULATE_TEMPLATE,
     LOGIN,
-    LOGOUT
+    LOGOUT,
+    GET_USER_TEMPLATES
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -114,7 +115,7 @@ export const removeDataSource = id => async (dispatch, getState) => {
         });
 
     if(!response.data.error){
-        history.push('/');
+        history.push('/data-sources');
     }
     
     dispatch({ type: REMOVE_DATA_SOURCE, payload: response.data });
@@ -138,6 +139,26 @@ export const getUserDataSources = () => async (dispatch, getState) => {
         });
 
     dispatch({ type: GET_USER_DATA_SOURCES, payload: response.data });
+}
+
+export const getUserTemplates = () => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    var response = await chartClient.get(
+        `/template/user/all`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+    dispatch({ type: GET_USER_TEMPLATES, payload: response.data });
 }
 
 export const setTemplateName = templateName => {
@@ -287,7 +308,7 @@ export const removeTemplate = templateId => async (dispatch, getState) => {
     dispatch({ type: REMOVE_TEMPLATE, payload: response.data });
 
     if(!response.data.error){
-        history.push('/template/create');
+        history.push('/templates');
     }
 };
 
