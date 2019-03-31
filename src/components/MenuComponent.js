@@ -38,7 +38,7 @@ class MenuComponent extends React.Component {
                             <Link class="nav-link" to="/data-source/create">CREATE DATA SOURCE</Link>
                         </li>
                         <li class="nav-item">
-                            <Link class="nav-link" to="#">MY DATA SOURCES</Link>
+                            <Link class="nav-link" to="/data-sources">MY DATA SOURCES</Link>
                         </li>
                         <li class="nav-item">
                             <Link class="nav-link" to="/template/create">CREATE TEMPLATE</Link>
