@@ -19,7 +19,8 @@ import {
     CALCULATE_TEMPLATE,
     LOGIN,
     LOGOUT,
-    GET_USER_TEMPLATES
+    GET_USER_TEMPLATES,
+    GET_DATA_SOURCE_UPLOAD_PROCESS
 } from '../constants/actionTypes'
 import chartClient from '../api/charterClient'
 import history from '../utils/history'
@@ -49,10 +50,6 @@ export const createDataSource = formValues => async (dispatch, getState) => {
         });
 
     dispatch({ type: CREATE_DATA_SOURCE, payload: response.data });
-
-    if(response.data.result){
-        history.push(`/data-source/${response.data.result}/info`);
-    }
 }
 
 export const getDataSource = id => async (dispatch, getState) => {
@@ -73,6 +70,26 @@ export const getDataSource = id => async (dispatch, getState) => {
         });
 
     dispatch({ type: GET_DATA_SOURCE, payload: response.data });
+}
+
+export const getDataSourceUploadProcess = (id) => async (dispatch, getState) => {
+    var state = getState();
+
+    if(!state.auth.isAuthenticated){
+        return;
+    }
+    
+    var token = state.auth.user.token;
+
+    var response = await chartClient.get(
+        `/dataSource/${id}/upload-process`,
+        {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+    dispatch({ type: GET_DATA_SOURCE_UPLOAD_PROCESS, payload: response.data });
 }
 
 export const updateDataSource = (id, dataSourceName) => async (dispatch, getState) => {
@@ -391,6 +408,11 @@ export const clearResults = () => dispatch => {
 
     dispatch({
         type: CALCULATE_TEMPLATE,
+        payload: null
+    });
+
+    dispatch({
+        type: GET_DATA_SOURCE_UPLOAD_PROCESS,
         payload: null
     });
 };

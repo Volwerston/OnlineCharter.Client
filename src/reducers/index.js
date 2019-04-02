@@ -22,7 +22,8 @@ import {
     UPDATE_DATA_SOURCE,
     REMOVE_DATA_SOURCE,
     REMOVE_TEMPLATE,
-    GET_USER_TEMPLATES
+    GET_USER_TEMPLATES,
+    GET_DATA_SOURCE_UPLOAD_PROCESS
 } from '../constants/actionTypes'
 
 const currentDataSourceReducer = (currentDataSource = null, action) => {
@@ -31,6 +32,14 @@ const currentDataSourceReducer = (currentDataSource = null, action) => {
     }
 
     return currentDataSource;
+}
+
+const dataSourceUploadProcessReducer = (uploadProcess = null, action) => {
+    if(action.type === GET_DATA_SOURCE_UPLOAD_PROCESS){
+        return action.payload;
+    }
+
+    return uploadProcess;
 }
 
 const userDataSourcesReducer = (userDataSources = null, action) => {
@@ -216,6 +225,7 @@ export default combineReducers(
         updateDataSourceResult: updateDataSourceResultReducer,
         removeDataSourceResult: removeDataSourceResultReducer,
         removeTemplateResult: removeTemplateResultReducer,
-        getUserTemplatesResult: getUserTemplatesResultReducer
+        getUserTemplatesResult: getUserTemplatesResultReducer,
+        dataSourceUploadProcessResult: dataSourceUploadProcessReducer
     }
 );

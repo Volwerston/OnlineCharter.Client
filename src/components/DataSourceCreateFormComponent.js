@@ -6,6 +6,7 @@ import { createDataSource, clearResults } from '../actions'
 import { renderField } from '../utils/renderField'
 import { required, xml } from '../utils/validations'
 import history from '../utils/history'
+import DataSourceUploadProcessComponent from './DataSourceUploadProcessComponent'
 
 class DataSourceCreateFormComponent extends React.Component {
     componentWillMount() {
@@ -14,7 +15,7 @@ class DataSourceCreateFormComponent extends React.Component {
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.clearResults();
     }
 
@@ -30,6 +31,15 @@ class DataSourceCreateFormComponent extends React.Component {
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+            );
+        }
+
+        var statusCheck = null;
+        if (this.props.createDataSourceResult && this.props.createDataSourceResult.result) {
+            statusCheck = (
+                <DataSourceUploadProcessComponent
+                    dataSourceId={this.props.createDataSourceResult.result}
+                />
             );
         }
 
@@ -71,6 +81,13 @@ class DataSourceCreateFormComponent extends React.Component {
                                 </div>
                                 <div className="col-sm-4">
                                     <button className="btn btn-info btn-block" type="submit">Submit</button>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div className="row">
+                                <div className="col-sm-12">
+                                    {statusCheck}
                                 </div>
                             </div>
                         </form>
