@@ -1,9 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import C3Chart from 'react-c3js'
-import 'c3/c3.css'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
+import Plot from 'react-plotly.js';
 
 import { calculateTemplate, clearResults } from '../actions'
 import history from '../utils/history'
@@ -77,7 +74,9 @@ const chartConfig = {
     chartFunctions: {
         "pie": function (aggregateFunctionName, calculationResult) {
 
-            var cols = [];
+            var values = [];
+            var labels = [];
+
             calculationResult.forEach(res => {
                 var resY = parseFloat(res.y);
 
@@ -85,30 +84,26 @@ const chartConfig = {
                     resY *= 100.0;
                 }
 
-                cols.push([`${aggregateFunctionName}(${res.x})`, resY]);
+                values.push(resY);
+                labels.push(`${aggregateFunctionName}(${res.x})`);
             });
 
             return {
-                data: {
-                    columns: cols,
+                data: [
+                    {
+                    values: values,
+                    labels: labels,
                     type: 'pie'
-                },
-                pie: {
-                    label: {
-                        format: function (value) {
-                            if (aggregateFunctionName === "percent") {
-                                return value + '%';
-                            }
-
-                            return value;
-                        }
-                    }
+                }],
+                layout: {
+                    width: 900,
+                    height: 700
                 }
             };
         },
         "bar": function (aggregateFunctionName, calculationResult, mapFunction) {
-            var x = ['x'];
-            var y = [`${aggregateFunctionName}(${mapFunction})`];
+            var x = [];
+            var y = [];
 
             calculationResult.forEach(res => {
                 x.push(res.x);
@@ -122,40 +117,22 @@ const chartConfig = {
             });
 
             return {
-                data: {
-                    x: 'x',
-                    columns: [
-                        x,
-                        y
-                    ],
+                data: [
+                    {
+                    x: x,
+                    y: y,
                     type: 'bar'
-                },
-                axis: {
-                    x: {
-                        type: 'category',
-                        tick: {
-                            rotate: 75,
-                            multiline: false
-                        },
-                        height: 130
-                    },
-                    y: {
-                        tick: {
-                            format: function (value) {
-                                if (aggregateFunctionName === "percent") {
-                                    return value + '%';
-                                }
-
-                                return value;
-                            }
-                        }
-                    }
+                }],
+                layout: {
+                    width: 900,
+                    height: 700,
+                    title: `${aggregateFunctionName}(${mapFunction})`
                 }
             };
         },
         "line": function (aggregateFunctionName, calculationResult, mapFunction) {
-            var x = ['x'];
-            var y = [`${aggregateFunctionName}(${mapFunction})`];
+            var x = [];
+            var y = [];
 
             calculationResult.forEach(res => {
                 x.push(res.x);
@@ -169,33 +146,16 @@ const chartConfig = {
             });
 
             return {
-                data: {
-                    x: 'x',
-                    columns: [
-                        x,
-                        y
-                    ]
-                },
-                axis: {
-                    x: {
-                        type: 'category',
-                        tick: {
-                            rotate: 75,
-                            multiline: false
-                        },
-                        height: 130
-                    },
-                    y: {
-                        tick: {
-                            format: function (value) {
-                                if (aggregateFunctionName === "percent") {
-                                    return value + '%';
-                                }
-
-                                return value;
-                            }
-                        }
-                    }
+                data: [
+                    {
+                    x: x,
+                    y: y,
+                    type: 'scatter'
+                }],
+                layout: {
+                    width: 900,
+                    height: 700,
+                    title: `${aggregateFunctionName}(${mapFunction})`
                 }
             };
         }
@@ -204,13 +164,13 @@ const chartConfig = {
 
 class TemplateVisualizerComponent extends React.Component {
 
-    componentWillMount(){
-        if(!this.props.user.isAuthenticated){
+    componentWillMount() {
+        if (!this.props.user.isAuthenticated) {
             history.push('/');
         }
     }
 
-    componentWillUnmount(){
+    componentWillUnmount() {
         this.props.clearResults();
     }
 
@@ -218,29 +178,17 @@ class TemplateVisualizerComponent extends React.Component {
         this.props.calculateTemplate(this.props.match.params.id);
     }
 
-    pdfExport = () => {
-        var svg = document.getElementById('svgContainer');
-
-        html2canvas(svg)
-            .then(svg => {
-                const imgData = svg.toDataURL('image/png');
-                const pdf = new jsPDF();
-                pdf.addImage(imgData, 'PNG', 0, 0);
-                pdf.save("download.pdf");
-            });
-    }
-
     render() {
         if (this.props.calculationResult) {
 
-            if(this.props.calculationResult.error){
+            if (this.props.calculationResult.error) {
                 return (
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {this.props.calculationResult.error}
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>);
+                        {this.props.calculationResult.error}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>);
             }
 
             var calculationResult = this.props.calculationResult.result.calculationResult;
@@ -249,7 +197,7 @@ class TemplateVisualizerComponent extends React.Component {
             var mapFunction = this.props.calculationResult.result.template.mapFunction.returnValue;
 
             var calculateChartValuesResult = chartConfig.aggregateFunctions[aggregateFunction](calculationResult);
-            var c3Props = chartConfig.chartFunctions[chartType](aggregateFunction, calculateChartValuesResult, mapFunction);
+            var plotProps = chartConfig.chartFunctions[chartType](aggregateFunction, calculateChartValuesResult, mapFunction);
 
             return (
                 <div className="row">
@@ -257,19 +205,7 @@ class TemplateVisualizerComponent extends React.Component {
                         <div className="row">
                             <div className="col-sm-2"></div>
                             <div className="col-sm-8" id="svgContainer">
-                                <C3Chart {...c3Props} />
-                            </div>
-                        </div>
-                        <br />
-                        <br />
-                        <div className="row">
-                            <div className="col-md-5"></div>
-                            <div className="col-md-2">
-                                <button
-                                    className="btn btn-block btn-info"
-                                    onClick={this.pdfExport}>
-                                    Export to PDF
-                                </button>
+                                <Plot {...plotProps} />
                             </div>
                         </div>
                     </div>
