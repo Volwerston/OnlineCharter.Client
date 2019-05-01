@@ -15,7 +15,7 @@ import TemplateSearchComponent from './components/TemplateSearchComponent';
 class App extends Component {
   render(){
     return (
-      <div>
+      <div style={{ overflow: 'hidden' }}>
         <div>
           <MenuComponent />
         </div>
