@@ -1,5 +1,5 @@
 import axios from 'axios';
 
 export default axios.create({
-    baseURL: 'http://localhost:49932'
+    baseURL: 'https://onlinecharterapi.azurewebsites.net'
 });
