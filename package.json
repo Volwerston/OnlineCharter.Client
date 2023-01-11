@@ -5,7 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "html2canvas": "^1.0.0-alpha.12",
-    "jsonwebtoken": "^8.5.0",
+    "jsonwebtoken": "^9.0.0",
     "plotly.js": "^1.47.4",
     "react": "^16.8.2",
     "react-data-table-component": "^1.4.6",
